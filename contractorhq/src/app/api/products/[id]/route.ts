@@ -1,34 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectToDatabase } from "@/lib/db";
 import { Product } from "@/lib/models/Product";
 import { NextResponse } from "next/server";
 
 // GET: Fetch a product by ID
-export async function GET(
-  _req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: Request, context: { params: any }) {
   try {
+    const id = context.params.id; // ✅ NO destructuring outside
     await connectToDatabase();
-    const product = await Product.findById(params.id);
+    const product = await Product.findById(id);
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
     return NextResponse.json(product);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Failed to fetch product";
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    console.error("Error in GET /api/products/[id]:", error);
+    return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 });
   }
 }
 
 // DELETE: Delete a product by ID
 export async function DELETE(
-  _req: Request,
-  { params }: { params: { id: string } }
+  req: Request,
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = context.params;
     await connectToDatabase();
-    await Product.findByIdAndDelete(params.id);
+    await Product.findByIdAndDelete(id);
     return NextResponse.json({ message: "Product deleted" });
   } catch (error) {
     const errorMessage =
@@ -40,13 +39,14 @@ export async function DELETE(
 // PATCH: Update a product by ID
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = context.params;
     await connectToDatabase();
-    const updates = await req.json(); // Get the updates from the request body
-    const updatedProduct = await Product.findByIdAndUpdate(params.id, updates, {
-      new: true, // Return the updated document
+    const updates = await req.json();
+    const updatedProduct = await Product.findByIdAndUpdate(id, updates, {
+      new: true,
     });
 
     if (!updatedProduct) {

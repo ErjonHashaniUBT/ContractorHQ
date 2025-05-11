@@ -3,6 +3,7 @@ import { Product } from "@/lib/models/Product";
 import fs from "fs";
 
 async function seed() {
+  try{
   await connectToDatabase();
 
   const products = JSON.parse(
@@ -14,6 +15,10 @@ async function seed() {
 
   console.log("✅ Seeded products to MongoDB");
   process.exit();
+  }catch(error){
+    console.log("❌Error during seeding: ",error);
+    process.exit();
+  }
 }
 
 seed();

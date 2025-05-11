@@ -84,7 +84,7 @@ export default function Header() {
             <div className="absolute top-full left-0 w-48 bg-white shadow-lg py-2 z-50 border border-gray-100 invisible group-hover:visible transition-opacity duration-200 group-hover:opacity-100 opacity-0">
               {/* Brand logo links */}
               <Link
-                href="/brands/makita"
+                href="/brands/Makita"
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 <div className="relative h-6 w-[120px]">
@@ -101,7 +101,7 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/brands/dewalt"
+                href="/brands/DeWalt"
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 <div className="relative h-6 w-[120px]">
@@ -117,7 +117,7 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/brands/milwaukee"
+                href="/brands/Milwaukee"
                 className="block px-4 py-2 hover:bg-gray-100"
               >
                 <div className="relative h-6 w-[120px]">
@@ -193,7 +193,7 @@ export default function Header() {
             aria-label="Account"
             className="p-2 text-gray-600 hover:text-primary transition-colors"
           >
-            <Link href="/admin/products">
+            <Link href="/admin">
               <FiUser className="h-5 w-5" />
             </Link>
           </button>

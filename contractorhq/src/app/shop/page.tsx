@@ -1,3 +1,5 @@
+"use client";
+import { useState, useEffect } from "react";
 import ProductCard from "@/components/ui/ProductCard";
 import { FiFilter } from "react-icons/fi";
 import Link from "next/link";
@@ -35,16 +37,34 @@ async function getProducts(category?: string) {
   }
 }
 
-export default async function ShopPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string }>;
-}) {
-  const { category } = await searchParams;
-  const products: Product[] = await getProducts(category);
+export default function ShopPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  // Fetch products whenever the category changes
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const fetchedProducts = await getProducts(selectedCategory);
+      setProducts(fetchedProducts);
+    };
+
+    fetchProducts();
+  }, [selectedCategory]);
+
+  // Toggle filter dropdown visibility
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
+
+  // Handle category change
+  const handleCategoryChange = (newCategory: string) => {
+    setSelectedCategory(newCategory);
+    setIsFilterVisible(false); // Close the filter after selection
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 relative">
       {/* Page Header with Breadcrumbs */}
       <div className="mb-6">
         <nav className="flex items-center text-sm text-gray-500 mb-4">
@@ -53,11 +73,15 @@ export default async function ShopPage({
           </Link>
           <span className="mx-2">/</span>
           <span className="text-primary">Shop</span>
-          {category && (
+          {selectedCategory && (
             <>
               <span className="mx-2">/</span>
               <span className="capitalize">
-                {category === "deals" ? "Special Deals" : "New Arrivals"}
+                {selectedCategory === "deals"
+                  ? "Special Deals"
+                  : selectedCategory === "new"
+                  ? "New Arrivals"
+                  : "All Products"}
               </span>
             </>
           )}
@@ -65,19 +89,65 @@ export default async function ShopPage({
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <h1 className="text-3xl font-bold text-gray-900">
-            {!category || category === "all"
+            {selectedCategory === "all"
               ? "All Products"
-              : category === "deals"
+              : selectedCategory === "deals"
               ? "Special Deals"
-              : "New Arrivals"}
+              : selectedCategory === "new"
+              ? "New Arrivals"
+              : "Shop"}
           </h1>
 
-          {/* Filter Button - matches your header style */}
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+          {/* Filter Button */}
+          <div className="flex items-center gap-4 relative">
+            <button
+              onClick={toggleFilterVisibility}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               <FiFilter className="h-5 w-5 text-gray-600" />
               <span className="text-gray-700">Filter</span>
             </button>
+
+            {/* Filter Dropdown */}
+            {isFilterVisible && (
+              <div
+                className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-20 transition-all duration-300 ease-in-out"
+                style={{
+                  transform: isFilterVisible ? "scaleY(1)" : "scaleY(0)",
+                  transformOrigin: "top",
+                }}
+              >
+                <h3 className="text-lg font-semibold p-4 border-b border-gray-100">
+                  Filter by Category
+                </h3>
+                <div className="flex flex-col p-4 gap-2">
+                  <button
+                    onClick={() => handleCategoryChange("all")}
+                    className={`py-2 px-4 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                      selectedCategory === "all" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    All Products
+                  </button>
+                  <button
+                    onClick={() => handleCategoryChange("deals")}
+                    className={`py-2 px-4 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                      selectedCategory === "deals" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    Special Deals
+                  </button>
+                  <button
+                    onClick={() => handleCategoryChange("new")}
+                    className={`py-2 px-4 text-gray-700 rounded-lg hover:bg-gray-100 ${
+                      selectedCategory === "new" ? "bg-gray-200" : ""
+                    }`}
+                  >
+                    New Arrivals
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

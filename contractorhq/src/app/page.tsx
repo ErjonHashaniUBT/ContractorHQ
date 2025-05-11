@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/ui/HeroSection";
-import ProductCard from "@/components/ui/ProductCard";
-import Head from "next/head";
+import FeaturedSection from "@/components/ui/FeaturedProducts";
 
 interface Product {
   _id: string;
@@ -9,6 +8,17 @@ interface Product {
   image: string;
   isOnSale: boolean;
 }
+
+export const metadata = {
+  title: "ContractorHQ | Home",
+  description: "The best contractor-grade tools and equipment",
+  robots: "index, follow",
+  openGraph: {
+    title: "ContractorHQ | Home",
+    description: "Find the best contractor-grade tools and equipment here",
+    images: ["/images/hero/hero-1.png"],
+  },
+};
 
 export default async function Home() {
   let products: Product[] = [];
@@ -36,32 +46,10 @@ export default async function Home() {
 
   return (
     <>
-      <Head>
-        <title>ContractorHQ | Home</title>
-        <meta
-          name="description"
-          content="The best contractor-grade tools and equipment"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="ContractorHQ | Home" />
-        <meta
-          property="og:description"
-          content="Find the best contractor-grade tools and equipment here"
-        />
-        <meta property="og:image" content="/images/hero/hero-1.png" />
-      </Head>
       <section>
         <HeroSection />
-        <section className="py-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-            {products.slice(0, 3).map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        </section>
+        <FeaturedSection products={products} />
       </section>
     </>
   );
 }
-
-Home.displayName = "Home | ContractorHQ";

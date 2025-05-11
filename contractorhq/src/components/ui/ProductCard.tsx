@@ -48,7 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Info */}
       <div className="p-5 space-y-3 border-t border-gray-100">
         {/* Product Name */}
-        <h3 className="text-lg font-semibold text-dark line-clamp-2 leading-tight">
+        <h3 className="text-lg font-semibold text-dark line-clamp-1 leading-tight">
           {product.name}
         </h3>
 
