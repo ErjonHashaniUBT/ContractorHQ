@@ -1,18 +1,19 @@
-// app/api/products/brands/[brand]/route.ts
-
 import { connectToDatabase } from "@/lib/db";
 import { Product } from "@/lib/models/Product";
 import { NextResponse } from "next/server";
 
+// Correctly define the context type using a Promise
+interface BrandContext {
+  params: Promise<{ brand: string }>;
+}
+
 // GET: Fetch products by brand
 export async function GET(
   _req: Request,
-  { params }: { params: { brand: string } }
+  context: BrandContext
 ) {
-  const { brand } = params; // Retrieve brand from URL params
-
   try {
-    await connectToDatabase();
+    const { brand } = await context.params; // Await the promise to get the brand
 
     // List of valid brands (you can expand this list)
     const validBrands = ["Makita", "Milwaukee", "DeWalt", "Bosch", "Stihl"];
@@ -21,6 +22,8 @@ export async function GET(
     if (!validBrands.includes(brand)) {
       return NextResponse.json({ error: "Invalid brand" }, { status: 400 });
     }
+
+    await connectToDatabase();
 
     // Fetch products from the database for the specific brand
     const filteredProducts = await Product.find({ brand }).exec();

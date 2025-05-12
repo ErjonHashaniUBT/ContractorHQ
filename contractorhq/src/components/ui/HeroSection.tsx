@@ -144,6 +144,7 @@ export function HeroSection() {
                   quality={100}
                   priority={i === 0}
                   loading={i === 0 ? "eager" : "lazy"}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" // Add the sizes prop here
                 />
               </div>
             ))}
@@ -173,6 +174,7 @@ export function HeroSection() {
                       fill
                       className="object-contain"
                       loading="eager"
+                      sizes="(max-width: 640px) 50vw, 33vw" // Add the sizes prop here as well
                     />
                   </div>
                 )

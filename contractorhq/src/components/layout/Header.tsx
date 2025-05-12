@@ -43,6 +43,13 @@ export default function Header() {
             Home
           </Link>
 
+          <Link
+            href="/blogs"
+            className="font-medium text-dark hover:text-primary transition-colors"
+          >
+            Blogs
+          </Link>
+
           {/* Shop drop menu */}
           <div className="relative group">
             <div className="font-medium text-dark hover:text-primary transition-colors flex items-center gap-1 cursor-pointer">
