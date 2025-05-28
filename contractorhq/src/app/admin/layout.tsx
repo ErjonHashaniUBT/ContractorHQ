@@ -1,47 +1,74 @@
+// app/admin/layout.tsx
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "@/styles/globals.css";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-gray-50">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-800 text-white p-6 space-y-4 sticky top-10 h-screen">
-        <h2 className="text-xl font-bold">Admin Panel</h2>
-        <nav className="space-y-2">
+      <aside className="w-64 bg-dark text-white p-6 space-y-8 sticky top-0 h-screen border-r border-gray-200">
+        <div className="flex items-center gap-3">
+          <h2 className="text-xl font-bold">Admin Panel</h2>
+        </div>
+        <nav className="space-y-1">
           <Link
             href="/admin"
-            className={`block px-3 py-2 rounded ${pathname === "/admin" ? "bg-gray-700 font-semibold" : "hover:bg-gray-700"}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              pathname === "/admin"
+                ? "bg-primary text-white"
+                : "hover:bg-primary/10"
+            }`}
           >
-            Dashboard
+            <span>📊</span>
+            <span>Dashboard</span>
           </Link>
           <Link
             href="/admin/products"
-            className={`block px-3 py-2 rounded ${pathname.startsWith("/admin/products") ? "bg-gray-700 font-semibold" : "hover:bg-gray-700"}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              pathname.startsWith("/admin/products")
+                ? "bg-primary text-white"
+                : "hover:bg-primary/10"
+            }`}
           >
-            Products
+            <span>🛍️</span>
+            <span>Products</span>
           </Link>
           <Link
             href="/admin/blogs"
-            className={`block px-3 py-2 rounded ${pathname.startsWith("/admin/blogs") ? "bg-gray-700 font-semibold" : "hover:bg-gray-700"}`}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              pathname.startsWith("/admin/blogs")
+                ? "bg-primary text-white"
+                : "hover:bg-primary/10"
+            }`}
           >
-            Blogs
+            <span>✏️</span>
+            <span>Blogs</span>
           </Link>
           <Link
-            href="/admin/news"
-            className={`block px-3 py-2 rounded ${pathname.startsWith("/admin/news") ? "bg-gray-700 font-semibold" : "hover:bg-gray-700"}`}
+            href="/admin/messages"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+              pathname.startsWith("/admin/messages")
+                ? "bg-primary text-white"
+                : "hover:bg-primary/10"
+            }`}
           >
-            News
+            <span>📩</span>
+            <span>Messages</span>
           </Link>
         </nav>
       </aside>
 
       {/* Page content */}
-      <main className="flex-1 bg-gray-100 p-8 overflow-y-auto">{children}</main>
+      <main className="flex-1 p-8 overflow-y-auto">{children}</main>
     </div>
   );
 }

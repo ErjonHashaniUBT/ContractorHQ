@@ -1,3 +1,4 @@
+// app/admin/products/[id]/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -25,17 +26,13 @@ const UpdateProductPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [newImageInput, setNewImageInput] = useState("");
 
-  // Fetch the product details when the page loads
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         setIsLoading(true);
         const response = await fetch(`/api/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch product");
-        }
-        const data = await response.json();
-        setProduct(data);
+        if (!response.ok) throw new Error("Failed to fetch product");
+        setProduct(await response.json());
       } catch (error) {
         console.error("Error fetching product:", error);
       } finally {
@@ -43,65 +40,44 @@ const UpdateProductPage = () => {
       }
     };
 
-    if (id) {
-      fetchProduct();
-    }
+    if (id) fetchProduct();
   }, [id]);
 
   const handleAddImage = () => {
     if (!product) return;
-    
+
     if (newImageInput.trim().startsWith("/images/products/")) {
       setProduct({
         ...product,
-        images: [...(product.images || []), newImageInput.trim()]
+        images: [...(product.images || []), newImageInput.trim()],
       });
       setNewImageInput("");
     } else {
-      console.error("Additional images must be relative to /images/products/");
+      alert("Additional images must be relative to /images/products/");
     }
   };
 
   const handleRemoveImage = (index: number) => {
     if (!product) return;
-    
     setProduct({
       ...product,
-      images: (product.images || []).filter((_, i) => i !== index)
+      images: (product.images || []).filter((_, i) => i !== index),
     });
   };
 
-  // Handle form submission
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!product) return;
-
-    // Validate required fields
-    if (!product.name || !product.price || !product.description || !product.category || !product.brand) {
-      console.error("Please fill in all required fields");
-      return;
-    }
-
-    // Validate image URL format
-    if (product.image && !product.image.startsWith("/images/products/")) {
-      console.error("Main image must be relative to /images/products/");
-      return;
-    }
 
     try {
       setIsLoading(true);
       const response = await fetch(`/api/products/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(product),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to update product");
-      }
-
+      if (!response.ok) throw new Error("Failed to update product");
       router.push("/admin/products");
     } catch (error) {
       console.error("Error updating product:", error);
@@ -112,19 +88,20 @@ const UpdateProductPage = () => {
 
   if (isLoading && !product) {
     return (
-      <div className="p-4 flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="p-4 text-center">
-        <h2 className="text-xl font-semibold">Product not found</h2>
-        <Button 
+      <div className="text-center p-8">
+        <h2 className="text-xl font-semibold text-dark mb-4">
+          Product not found
+        </h2>
+        <Button
           onClick={() => router.push("/admin/products")}
-          className="mt-4"
           variant="primary"
         >
           Back to Products
@@ -134,9 +111,9 @@ const UpdateProductPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Update Product</h1>
+    <div className="p-8 max-w-6xl mx-auto">
+      <div className="flex items-center justify-between mb-5">
+        <h1 className="text-2xl font-bold text-dark">Update Product</h1>
         <Button
           variant="secondary"
           onClick={() => router.push("/admin/products")}
@@ -144,33 +121,36 @@ const UpdateProductPage = () => {
           Back to Products
         </Button>
       </div>
-      
-      <form onSubmit={handleUpdate} className="space-y-6 bg-white p-6 rounded-lg shadow">
+
+      <form
+        onSubmit={handleUpdate}
+        className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Product Name *</span>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Product Name *
             </label>
             <input
               type="text"
-              className="input input-bordered w-full"
               value={product.name}
               onChange={(e) => setProduct({ ...product, name: e.target.value })}
+              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Price *</span>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Price *
             </label>
             <input
               type="number"
-              className="input input-bordered w-full"
               value={product.price}
               onChange={(e) =>
                 setProduct({ ...product, price: Number(e.target.value) })
               }
+              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               min="0"
               step="0.01"
               required
@@ -179,90 +159,92 @@ const UpdateProductPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Category *</span>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Category *
             </label>
             <input
               type="text"
-              className="input input-bordered w-full"
               value={product.category}
               onChange={(e) =>
                 setProduct({ ...product, category: e.target.value })
               }
+              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Brand *</span>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Brand *
             </label>
             <input
               type="text"
-              className="input input-bordered w-full"
               value={product.brand}
-              onChange={(e) => setProduct({ ...product, brand: e.target.value })}
+              onChange={(e) =>
+                setProduct({ ...product, brand: e.target.value })
+              }
+              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
         </div>
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Main Image URL</span>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Main Image URL
           </label>
           <input
             type="text"
-            className="input input-bordered w-full"
             value={product.image}
             onChange={(e) => setProduct({ ...product, image: e.target.value })}
+            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
             placeholder="/images/products/example.jpg"
           />
           {product.image && (
             <div className="mt-2">
               <div className="text-sm text-gray-500 mb-1">Image Preview:</div>
-              <Image 
-                src={product.image}
-                width={200}
-                height={200} 
-                alt="Preview" 
-                className="h-32 object-contain border rounded"
-              />
+              <div className="relative h-48 w-full border border-gray-200 rounded-lg overflow-hidden">
+                <Image
+                  src={product.image}
+                  fill
+                  alt="Preview"
+                  className="object-contain"
+                />
+              </div>
             </div>
           )}
         </div>
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Additional Images</span>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Additional Images
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <input
               type="text"
-              className="input input-bordered flex-1"
               value={newImageInput}
               onChange={(e) => setNewImageInput(e.target.value)}
+              className="flex-1 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               placeholder="/images/products/extra1.jpg"
             />
-            <button
-              type="button"
-              onClick={handleAddImage}
-              className="btn btn-secondary"
-            >
+            <Button type="button" variant="accent" onClick={handleAddImage}>
               Add Image
-            </button>
+            </Button>
           </div>
-          
+
           {product.images && product.images.length > 0 && (
             <div className="mt-3 space-y-2">
               {product.images.map((img, i) => (
-                <div key={i} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                  <span className="text-sm truncate">{img}</span>
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                >
+                  <span className="text-sm text-gray-700 truncate">{img}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(i)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-error hover:text-error-dark"
                   >
                     ✖
                   </button>
@@ -272,35 +254,33 @@ const UpdateProductPage = () => {
           )}
         </div>
 
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Description *</span>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Description *
           </label>
           <textarea
-            className="textarea textarea-bordered w-full h-32"
             value={product.description}
             onChange={(e) =>
               setProduct({ ...product, description: e.target.value })
             }
+            className="w-full p-3 border border-gray-200 rounded-lg h-40 focus:ring-2 focus:ring-primary focus:border-primary transition"
             required
           />
         </div>
 
-        <div className="form-control">
-          <label className="label cursor-pointer flex items-center gap-2">
-            <span className="label-text">On Sale</span>
-            <input
-              type="checkbox"
-              className="toggle toggle-primary"
-              checked={product.isOnSale}
-              onChange={(e) =>
-                setProduct({ ...product, isOnSale: e.target.checked })
-              }
-            />
-          </label>
+        <div className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            checked={product.isOnSale}
+            onChange={(e) =>
+              setProduct({ ...product, isOnSale: e.target.checked })
+            }
+            className="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded"
+          />
+          <label className="text-sm font-medium text-gray-700">On Sale</label>
         </div>
 
-        <div className="flex gap-4 justify-end pt-4">
+        <div className="flex gap-4 justify-end pt-6">
           <Button
             type="button"
             variant="danger"
@@ -309,12 +289,8 @@ const UpdateProductPage = () => {
           >
             Cancel
           </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            disabled={isLoading}
-          >
-            {isLoading ? "Updating..." : "Update Product"}
+          <Button type="submit" variant="primary" loading={isLoading}>
+            Update Product
           </Button>
         </div>
       </form>

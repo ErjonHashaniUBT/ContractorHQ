@@ -1,5 +1,7 @@
 "use client";
+
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
 import { FiFilter } from "react-icons/fi";
 import Link from "next/link";
@@ -20,7 +22,6 @@ async function getProducts(category?: string) {
     if (category === "deals") endpoint = "/api/deals";
     if (category === "new") endpoint = "/api/products/new";
 
-    // Create absolute URL for server-side fetching
     const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
       : "http://localhost:3000";
@@ -38,34 +39,49 @@ async function getProducts(category?: string) {
 }
 
 export default function ShopPage() {
+  const searchParams = useSearchParams();
+  const categoryFromURL = searchParams.get("category") ?? "all";
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(categoryFromURL);
   const [products, setProducts] = useState<Product[]>([]);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch products whenever the category changes
+  useEffect(() => {
+    setSelectedCategory(categoryFromURL);
+  }, [categoryFromURL]);
+
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       const fetchedProducts = await getProducts(selectedCategory);
       setProducts(fetchedProducts);
+      setIsLoading(false);
     };
 
     fetchProducts();
   }, [selectedCategory]);
 
-  // Toggle filter dropdown visibility
   const toggleFilterVisibility = () => {
     setIsFilterVisible(!isFilterVisible);
   };
 
-  // Handle category change
   const handleCategoryChange = (newCategory: string) => {
+    const url = new URL(window.location.href);
+    if (newCategory === "all") {
+      url.searchParams.delete("category");
+    } else {
+      url.searchParams.set("category", newCategory);
+    }
+    window.history.replaceState({}, "", url.toString());
     setSelectedCategory(newCategory);
-    setIsFilterVisible(false); // Close the filter after selection
+    setIsFilterVisible(false);
   };
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
-      {/* Page Header with Breadcrumbs */}
+      {/* Breadcrumb */}
       <div className="mb-6">
         <nav className="flex items-center text-sm text-gray-500 mb-4">
           <Link href="/" className="hover:text-primary">
@@ -73,7 +89,7 @@ export default function ShopPage() {
           </Link>
           <span className="mx-2">/</span>
           <span className="text-primary">Shop</span>
-          {selectedCategory && (
+          {selectedCategory && selectedCategory !== "all" && (
             <>
               <span className="mx-2">/</span>
               <span className="capitalize">
@@ -89,16 +105,13 @@ export default function ShopPage() {
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <h1 className="text-3xl font-bold text-gray-900">
-            {selectedCategory === "all"
-              ? "All Products"
-              : selectedCategory === "deals"
+            {selectedCategory === "deals"
               ? "Special Deals"
               : selectedCategory === "new"
               ? "New Arrivals"
-              : "Shop"}
+              : "All Products"}
           </h1>
 
-          {/* Filter Button */}
           <div className="flex items-center gap-4 relative">
             <button
               onClick={toggleFilterVisibility}
@@ -108,15 +121,8 @@ export default function ShopPage() {
               <span className="text-gray-700">Filter</span>
             </button>
 
-            {/* Filter Dropdown */}
             {isFilterVisible && (
-              <div
-                className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-20 transition-all duration-300 ease-in-out"
-                style={{
-                  transform: isFilterVisible ? "scaleY(1)" : "scaleY(0)",
-                  transformOrigin: "top",
-                }}
-              >
+              <div className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg rounded-lg border border-gray-200 z-20 transition-all duration-300 ease-in-out">
                 <h3 className="text-lg font-semibold p-4 border-b border-gray-100">
                   Filter by Category
                 </h3>
@@ -152,9 +158,13 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Products Grid */}
-      {products.length === 0 ? (
-        <div className="text-center py-12">
+      {/* Loading State */}
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-screen sm:min-h-auto sm:py-52">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        </div>
+      ) : products.length === 0 ? (
+        <div className="text-center min-h-screen">
           <p className="text-lg text-gray-500">No products found</p>
           <Link
             href="/shop"

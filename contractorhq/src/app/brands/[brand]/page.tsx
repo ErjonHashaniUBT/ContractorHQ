@@ -100,8 +100,8 @@ export default function BrandPage() {
         {/* Status Section */}
         <div className="mb-10">
           {isLoading ? (
-            <div className="flex justify-center">
-              <div className="animate-pulse bg-gray-200 h-8 w-48 rounded-full"></div>
+            <div className="flex justify-center items-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
             </div>
           ) : error ? (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r">

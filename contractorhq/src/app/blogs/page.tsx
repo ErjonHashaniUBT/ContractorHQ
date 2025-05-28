@@ -4,11 +4,15 @@
 import { useBlog } from "../hooks/useBlog";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 export default function BlogListPage() {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { deleteBlog, loading, error } = useBlog();
+
+  const router = useRouter();
 
   // Fetch blogs on client-side with revalidation
   useEffect(() => {
@@ -39,15 +43,13 @@ export default function BlogListPage() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-pulse flex space-x-4">
-          <div className="rounded-full bg-indigo-500 h-12 w-12"></div>
-        </div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
       <div className="text-center mb-16">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
           Latest Blogs
@@ -74,13 +76,21 @@ export default function BlogListPage() {
             <div className="p-6">
               <h2 className="text-xl font-bold">{blog.title}</h2>
               <p className="text-gray-600 mt-2 line-clamp-3">{blog.content}</p>
-              <button
+              <Button
+                variant="danger"
                 onClick={() => handleDelete(blog._id)}
                 className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                 disabled={loading}
               >
                 {loading ? "Deleting..." : "Delete"}
-              </button>
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => router.push(`/blogs/${blog._id}`)}
+                className="mt-2 ml-4"
+              >
+                View Blog
+              </Button>
             </div>
           </div>
         ))}

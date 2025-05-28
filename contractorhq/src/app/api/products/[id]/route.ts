@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 // GET: Fetch a product by ID
 export async function GET(req: Request, context: { params: any }) {
   try {
-    const id = context.params.id; // ✅ NO destructuring outside
+    const { id } = await context.params;
     await connectToDatabase();
     const product = await Product.findById(id);
     if (!product) {

@@ -24,12 +24,14 @@ export default async function Home() {
   let products: Product[] = [];
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/products`,
-      {
-        next: { revalidate: 60 },
-      }
-    );
+    const baseURL =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : process.env.NEXT_PUBLIC_SITE_URL;
+
+    const res = await fetch(`${baseURL}/api/products`, {
+      next: { revalidate: 60 },
+    });
 
     // Check if response is OK (status 200-299)
     if (!res.ok) {

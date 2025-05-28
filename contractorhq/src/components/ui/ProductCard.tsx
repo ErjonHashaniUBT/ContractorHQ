@@ -68,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               // Add to cart logic
             }}
           >
-            <span className="relative z-10">Add to Cart</span>
+            <span className="relative z-10">Cart +</span>
           </Button>
         </div>
       </div>
