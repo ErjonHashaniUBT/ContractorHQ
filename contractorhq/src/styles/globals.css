@@ -80,19 +80,20 @@
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
   100% {
     transform: translateX(-50%);
   }
 }
 
-.animate-grid-pan {
-  animation: grid-pan 5s linear infinite;
+.animate-marquee {
+  animation: marquee 30s linear infinite;
 }
 
-.animate-marquee {
-  animation: marquee 15s linear infinite;
+
+.animate-grid-pan {
+  animation: grid-pan 5s linear infinite;
 }
 
 @layer components {
@@ -138,6 +139,6 @@
 
   .scrollbar-square::-webkit-scrollbar-corner {
     background: #f3f4f6;
-    border-radius: 0 !
+    border-radius: 0 !;
   }
 }

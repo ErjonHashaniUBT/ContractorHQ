@@ -97,7 +97,7 @@ export default async function BlogPostPage({
 
         <footer className="pt-8 mt-8 border-t border-gray-light">
           <Link
-            href="/blog"
+            href="/blogs"
             className="inline-flex items-center gap-2 text-primary hover:text-primary-dark transition-colors group"
           >
             <FiArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />

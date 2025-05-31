@@ -38,7 +38,7 @@ export default function Header() {
             alt="ContractorHQ Logo"
             width={160}
             height={40}
-            className="h-14 w-auto"
+            className="object-contain"
             priority
           />
         </Link>
@@ -57,7 +57,7 @@ export default function Header() {
           <div className="relative group">
             <div className="font-medium text-dark hover:text-primary transition-colors duration-200 flex items-center gap-1 cursor-pointer">
               <FiShoppingBag className="w-4 h-4" />
-              Shop
+              <Link href="/shop">Shop</Link>
               <FiChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
             </div>
 
@@ -113,13 +113,12 @@ export default function Header() {
                     href="/brands/Makita"
                     className="block px-4 py-3 hover:bg-primary-lighter transition-colors duration-150"
                   >
-                    <div className="relative h-6 w-[120px]">
+                    <div className="relative w-[120px] h-6">
                       <Image
                         src="/images/brands/makita-logo.png"
                         alt="Makita"
                         fill
                         className="object-contain object-left"
-                        sizes="120px"
                         loading="lazy"
                       />
                     </div>
@@ -192,7 +191,7 @@ export default function Header() {
                 </h3>
               </div>
               <Link
-                href="/support/contact"
+                href="/support#contact"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-primary-lighter hover:text-primary-dark transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
@@ -200,7 +199,7 @@ export default function Header() {
                 </span>
               </Link>
               <Link
-                href="/support/faq"
+                href="/support#faq"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-primary-lighter hover:text-primary-dark transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
@@ -208,7 +207,7 @@ export default function Header() {
                 </span>
               </Link>
               <Link
-                href="/support/returns"
+                href="/support#returns"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-primary-lighter hover:text-primary-dark transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
