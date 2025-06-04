@@ -1,45 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  /* Primary Blues */
-  --color-primary: #0369a1; /* Deep ocean blue */
-  --color-primary-light: #0ea5e9; /* Bright azure */
-  --color-primary-lighter: #bae6fd; /* Soft sky blue */
-  --color-primary-dark: #075985; /*Darker Deep ocean blue */
+  --color-theme-white: #ffffff;
+  --color-theme-header:#ffffff;
 
-  /* Neutrals */
-  --color-dark: #0f172a; /* Dark navy (almost black) */
-  --color-light: #f8fafc; /* Pure white */
-  --color-gray: #94a3b8; /* Cool gray */
-  --color-gray-light: #e2e8f0; /* Light Cool gray */
+  --color-primary: #0369a1;
+  --color-primary-light: #0ea5e9;
+  --color-primary-lighter: #bae6fd;
+  --color-primary-dark: #075985;
 
-  /* Accents (Subtle Teal) */
-  --color-accent: #0d9488; /* Sophisticated teal */
-  --color-accent-light: #2dd4bf; /* Light teal */
-  --color-accent-dark: #0f766e; /* Darker Sophisticated teal */
+  --color-dark: #0f172a;
+  --color-light: #f8fafc;
+  --color-gray: #94a3b8;
+  --color-gray-light: #e2e8f0;
 
-  /* Semantic Colors */
-  --color-success: #16a34a; /* Green for success actions */
-  --color-error: #dc2626; /* Red for destructive actions */
+  --color-accent: #0d9488;
+  --color-accent-light: #2dd4bf;
+  --color-accent-dark: #0f766e;
+
+  --color-success: #16a34a;
+  --color-error: #dc2626;
+
+  --color-gray-50:#f9fafb;
+  --color-gray-hundred: #f3f4f6;
+  --color-gray-six:#4a5565;
+  --color-gray-7: #2d3748;
+
+  --color-hover-gray-50:#f9fafb;
 }
 
-/* Dark mode styles */
-.dark body {
-  background-color: #111827;
-  color: #f3f4f6;
+.dark {
+  /* Backgrounds */
+  --color-theme-white: #0f0f1a; /* Dark navy base (slightly more modern than pure dark) */
+  --color-theme-header:#070728;
+  
+  
+  /* Text & surfaces */
+  --color-dark: #f8fafc; /* Light text stays the same (good choice) */
+  --color-light: #111827; /* Dark background (slightly warmer dark) */
+  --color-gray-light: #1f2937; /* Card surfaces (tailwind's gray-800) */
+  
+  /* Grays */
+  --color-gray-50:#1c1c30;;
+  --color-gray-hundred: #1a1b2e; /* Darker navy for subtle backgrounds */
+  --color-gray-six: #e5e7eb; /* Light gray for secondary text */
+  --color-gray-7: #e5e7eb; /* Light gray for secondary text */
+  
+  /* Accents - these make dark mode pop more */
+  --color-primary: #38bdf8; /* Brighter primary for better visibility */
+  --color-primary-light: #7dd3fc; /* Lighter primary accent */
+  --color-primary-dark: #0369a1; /* Kept original for consistency */
+  
+  --color-accent: #2dd4bf; /* Brighter teal for accents */
+  --color-accent-light: #5eead4; /* Lighter teal */
+  --color-accent-dark: #0d9488; /* Kept original */
+  
+  /* Status colors - more vibrant in dark mode */
+  --color-success: #4ade80; /* Brighter green */
+  --color-error: #f87171; /* Softer red (better for dark backgrounds) */
+
+  --color-hover-gray-50:#111151; /* Darker hover:bg-gray-50*/
 }
 
-.dark .bg-white {
-  background-color: #1f2937;
-}
-
-.dark .text-dark {
-  color: #f3f4f6;
-}
-
-.dark .border-gray-200 {
-  border-color: #374151;
-}
 
 /* Animation keyframes */
 @keyframes fade-slide-in {
@@ -157,6 +179,6 @@
 
   .scrollbar-square::-webkit-scrollbar-corner {
     background: #f3f4f6;
-    border-radius: 0 !;
+    border-radius: 0 !important;
   }
 }

@@ -9,12 +9,14 @@ const variantStyles = {
   ghost: "text-primary hover:bg-primary-lighter",
   nav: "text-dark hover:text-primary hover:bg-transparent p-0 h-auto",
   icon: "p-2 text-gray-600 hover:text-primary",
+  cartIcon: "p-1 rounded border bg-white border-gray-300 text-indigo-600 hover:bg-indigo-100 hover:border-indigo-400",
 };
 
 const sizeStyles = {
   sm: "px-3 py-1.5 text-xs",
   md: "px-4 py-2 text-sm",
   lg: "px-6 py-3 text-base",
+  xs: "p-1 text-base",
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

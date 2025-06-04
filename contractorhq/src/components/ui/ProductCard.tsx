@@ -2,6 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "./Button";
+import { useCartStore } from "@/lib/store/cart";
+import toast from "react-hot-toast";
+import { CartToast } from "./CartToast";
 
 interface ProductCardProps {
   product: {
@@ -15,8 +18,16 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const showCartToast = (productName: string, quantity: number) => {
+    toast.custom((t) => (
+      <CartToast productName={productName} quantity={quantity} toastId={t.id} />
+    ));
+  };
+
   return (
-    <div className="relative group border border-gray-100 rounded-2xl overflow-hidden bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/20">
+    <div className="relative group border border-gray-hundred rounded-2xl overflow-hidden bg-theme-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/20">
       {/* Sale Ribbon - Modern design */}
       {product.isOnSale && (
         <div className="absolute top-4 right-4 z-10 bg-error text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
@@ -54,7 +65,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Quick View Overlay - Modern */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-            <span className="bg-white text-dark font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+            <span className="bg-light text-dark font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -112,12 +123,21 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
 
-          {/* Add to Cart Button - Modern with icon */}
+          {/* Add to Cart Button */}
           <Button
             className="whitespace-nowrap px-4 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg transition-all duration-300 flex items-center gap-2 group/button"
             onClick={(e) => {
               e.preventDefault();
-              // Add to cart logic
+              addToCart(
+                {
+                  _id: product._id,
+                  name: product.name,
+                  price: product.price,
+                  image: product.image,
+                },
+                
+              );
+              showCartToast(product.name, 1);
             }}
           >
             <svg

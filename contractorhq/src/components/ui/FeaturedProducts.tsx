@@ -11,19 +11,20 @@ interface Product {
   price: number;
   image: string;
   isOnSale: boolean;
+  category: string;
 }
 
 export default function FeaturedSection({ products }: { products: Product[] }) {
   return (
     <motion.section
-      className="py-20 px-6 container mx-auto bg-white shadow-xl rounded-lg border-b-2 border-gray-200"
+      className="py-20 px-6 bg-theme-white shadow-xl"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
     >
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900">Featured Products</h1>
+        <h1 className="text-4xl font-bold text-dark">Featured Products</h1>
         <p className="text-lg text-gray-500 mt-2">
           Check out our most popular items and bestsellers!
         </p>

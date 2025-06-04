@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import toast from "react-hot-toast";
 
 export default function EditBlogPage() {
   const { id } = useParams();
@@ -38,6 +39,7 @@ export default function EditBlogPage() {
         });
       } catch (err: any) {
         setError(err.message);
+        toast.error(err.message); // Show error toast
       } finally {
         setLoading(false);
       }
@@ -71,13 +73,18 @@ export default function EditBlogPage() {
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Update failed");
 
-      alert("Blog updated successfully.");
+      toast.success("Blog updated successfully."); // Success toast instead of alert
       router.push("/admin/blogs");
     } catch (err: any) {
       setError(err.message);
+      toast.error(err.message); // Error toast
     } finally {
       setUpdating(false);
     }
+  };
+
+  const handleCancel = () => {
+    router.push("/admin/blogs");
   };
 
   if (loading) {
@@ -95,12 +102,12 @@ export default function EditBlogPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="max-w-3xl mx-auto p-8 rounded-lg shadow-sm border bg-light border-gray-light">
       <h1 className="text-3xl font-bold text-dark mb-6">Edit Blog Post</h1>
 
       <form onSubmit={handleUpdate} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-six mb-1">
             Title*
           </label>
           <input
@@ -108,12 +115,12 @@ export default function EditBlogPage() {
             value={blog.title}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 rounded-lg"
+            className="w-full p-3 border border-gray-light rounded-lg"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-six mb-1">
             Category*
           </label>
           <input
@@ -121,12 +128,12 @@ export default function EditBlogPage() {
             value={blog.category}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 rounded-lg"
+            className="w-full p-3 border border-gray-light rounded-lg"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-six mb-1">
             Content*
           </label>
           <textarea
@@ -135,12 +142,12 @@ export default function EditBlogPage() {
             onChange={handleChange}
             required
             rows={6}
-            className="w-full p-3 border border-gray-200 rounded-lg"
+            className="w-full p-3 border border-gray-light rounded-lg"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-six mb-1">
             Image URL
           </label>
           <input
@@ -148,7 +155,7 @@ export default function EditBlogPage() {
             value={blog.image}
             onChange={handleChange}
             placeholder="/images/blog-1.jpg"
-            className="w-full p-3 border border-gray-200 rounded-lg"
+            className="w-full p-3 border border-gray-light rounded-lg"
           />
         </div>
 
@@ -160,14 +167,24 @@ export default function EditBlogPage() {
             onChange={handleChange}
             className="h-5 w-5 border-gray-300 rounded"
           />
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-sm font-medium text-gray-six">
             Publish this post
           </label>
         </div>
 
-        <Button type="submit" size="lg" loading={updating}>
-          Update Blog
-        </Button>
+        <div className="flex justify-end space-x-4">
+          <Button
+            type="button"
+            variant="danger"
+            onClick={handleCancel}
+            disabled={updating}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" size="lg" loading={updating}>
+            Update Blog
+          </Button>
+        </div>
 
         {error && <p className="text-error mt-4">{error}</p>}
       </form>

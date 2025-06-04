@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectToDatabase } from "@/lib/db";
 import { Product } from "@/lib/models/Product";
 import { NextResponse } from "next/server";
 
 // GET: Fetch a product by ID
-export async function GET(req: Request, context: { params: any }) {
+export async function GET(
+  request: Request,
+  context: { params: { id: string } }
+) {
   try {
-    const { id } = await context.params;
+    const { id } = await context.params; // ✅ await here
     await connectToDatabase();
     const product = await Product.findById(id);
     if (!product) {
@@ -15,17 +17,19 @@ export async function GET(req: Request, context: { params: any }) {
     return NextResponse.json(product);
   } catch (error) {
     console.error("Error in GET /api/products/[id]:", error);
-    return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch product" },
+      { status: 500 }
+    );
   }
 }
 
-// DELETE: Delete a product by ID
 export async function DELETE(
-  req: Request,
+  request: Request,
   context: { params: { id: string } }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = await context.params; // ✅ await here
     await connectToDatabase();
     await Product.findByIdAndDelete(id);
     return NextResponse.json({ message: "Product deleted" });
@@ -36,15 +40,14 @@ export async function DELETE(
   }
 }
 
-// PATCH: Update a product by ID
 export async function PATCH(
-  req: Request,
+  request: Request,
   context: { params: { id: string } }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = await context.params; // ✅ await here
     await connectToDatabase();
-    const updates = await req.json();
+    const updates = await request.json();
     const updatedProduct = await Product.findByIdAndUpdate(id, updates, {
       new: true,
     });

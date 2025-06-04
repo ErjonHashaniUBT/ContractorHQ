@@ -11,6 +11,7 @@ interface Product {
   price: number;
   image: string;
   isOnSale: boolean;
+  category: string;
 }
 
 type BrandName = "Makita" | "DeWalt" | "Bosch" | "Milwaukee" | "Stihl";

@@ -1,10 +1,10 @@
-// app/admin/products/[id]/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 interface Product {
   _id: string;
@@ -32,9 +32,11 @@ const UpdateProductPage = () => {
         setIsLoading(true);
         const response = await fetch(`/api/products/${id}`);
         if (!response.ok) throw new Error("Failed to fetch product");
-        setProduct(await response.json());
+        const data = await response.json();
+        setProduct(data);
       } catch (error) {
         console.error("Error fetching product:", error);
+        toast.error("Failed to load product");
       } finally {
         setIsLoading(false);
       }
@@ -52,8 +54,9 @@ const UpdateProductPage = () => {
         images: [...(product.images || []), newImageInput.trim()],
       });
       setNewImageInput("");
+      toast.success("Image added!");
     } else {
-      alert("Additional images must be relative to /images/products/");
+      toast.error("Additional images must be relative to /images/products/");
     }
   };
 
@@ -63,6 +66,7 @@ const UpdateProductPage = () => {
       ...product,
       images: (product.images || []).filter((_, i) => i !== index),
     });
+    toast.success("Image removed");
   };
 
   const handleUpdate = async (e: React.FormEvent) => {
@@ -77,10 +81,16 @@ const UpdateProductPage = () => {
         body: JSON.stringify(product),
       });
 
-      if (!response.ok) throw new Error("Failed to update product");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to update product");
+      }
+
+      toast.success("Product updated successfully!");
       router.push("/admin/products");
     } catch (error) {
       console.error("Error updating product:", error);
+      toast.error(error instanceof Error ? error.message : "Update failed");
     } finally {
       setIsLoading(false);
     }
@@ -124,24 +134,24 @@ const UpdateProductPage = () => {
 
       <form
         onSubmit={handleUpdate}
-        className="bg-white p-8 rounded-xl shadow-sm border border-gray-200"
+        className="bg-light p-8 rounded-xl shadow-sm border border-gray-light"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-7">
               Product Name *
             </label>
             <input
               type="text"
               value={product.name}
               onChange={(e) => setProduct({ ...product, name: e.target.value })}
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-7">
               Price *
             </label>
             <input
@@ -150,7 +160,7 @@ const UpdateProductPage = () => {
               onChange={(e) =>
                 setProduct({ ...product, price: Number(e.target.value) })
               }
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               min="0"
               step="0.01"
               required
@@ -160,7 +170,7 @@ const UpdateProductPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-7">
               Category *
             </label>
             <input
@@ -169,13 +179,13 @@ const UpdateProductPage = () => {
               onChange={(e) =>
                 setProduct({ ...product, category: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-7">
               Brand *
             </label>
             <input
@@ -184,27 +194,27 @@ const UpdateProductPage = () => {
               onChange={(e) =>
                 setProduct({ ...product, brand: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-7">
             Main Image URL
           </label>
           <input
             type="text"
             value={product.image}
             onChange={(e) => setProduct({ ...product, image: e.target.value })}
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+            className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
             placeholder="/images/products/example.jpg"
           />
           {product.image && (
             <div className="mt-2">
               <div className="text-sm text-gray-500 mb-1">Image Preview:</div>
-              <div className="relative h-48 w-full border border-gray-200 rounded-lg overflow-hidden">
+              <div className="relative h-48 w-full border border-gray-light rounded-lg overflow-hidden">
                 <Image
                   src={product.image}
                   fill
@@ -217,7 +227,7 @@ const UpdateProductPage = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-7">
             Additional Images
           </label>
           <div className="flex gap-3">
@@ -225,7 +235,7 @@ const UpdateProductPage = () => {
               type="text"
               value={newImageInput}
               onChange={(e) => setNewImageInput(e.target.value)}
-              className="flex-1 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="flex-1 p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
               placeholder="/images/products/extra1.jpg"
             />
             <Button type="button" variant="accent" onClick={handleAddImage}>
@@ -240,7 +250,7 @@ const UpdateProductPage = () => {
                   key={i}
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                 >
-                  <span className="text-sm text-gray-700 truncate">{img}</span>
+                  <span className="text-sm text-gray-7 truncate">{img}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(i)}
@@ -255,7 +265,7 @@ const UpdateProductPage = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-7">
             Description *
           </label>
           <textarea
@@ -263,7 +273,7 @@ const UpdateProductPage = () => {
             onChange={(e) =>
               setProduct({ ...product, description: e.target.value })
             }
-            className="w-full p-3 border border-gray-200 rounded-lg h-40 focus:ring-2 focus:ring-primary focus:border-primary transition"
+            className="w-full p-3 border border-gray-light rounded-lg h-40 focus:ring-2 focus:ring-primary focus:border-primary transition"
             required
           />
         </div>
@@ -277,7 +287,7 @@ const UpdateProductPage = () => {
             }
             className="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded"
           />
-          <label className="text-sm font-medium text-gray-700">On Sale</label>
+          <label className="text-sm font-medium text-gray-7">On Sale</label>
         </div>
 
         <div className="flex gap-4 justify-end pt-6">

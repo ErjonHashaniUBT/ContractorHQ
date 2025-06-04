@@ -10,7 +10,7 @@ import { Button } from "../ui/Button";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-[#0369a1] text-white">
       <div className="container mx-auto px-6 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
@@ -72,7 +72,7 @@ export default function Footer() {
                 (item) => (
                   <li key={item}>
                     <Link
-                      href={`/${item.toLowerCase().replace(" ", "-")}`}
+                      href={`/support#${item.toLowerCase().replace(" ", "")}`}
                       className="text-primary-lighter/90 hover:text-white transition-colors flex items-start gap-2"
                     >
                       <span className="mt-1 h-1 w-1 rounded-full bg-accent-light opacity-0 hover:opacity-100 transition-opacity" />

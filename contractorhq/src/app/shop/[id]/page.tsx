@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useCartStore } from "@/lib/store/cart";
+import toast from "react-hot-toast";
+import { CartToast } from "@/components/ui/CartToast";
 import Image from "next/image";
 import {
   FaArrowUpRightDots,
@@ -16,6 +19,8 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import { BsCart3 } from "react-icons/bs";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/Button";
 
 interface Product {
   _id: string;
@@ -54,45 +59,57 @@ async function getProduct(id: string) {
 export default function ProductPageWrapper() {
   const params = useParams();
   const id = params?.id as string;
+  const router = useRouter();
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [mainImage, setMainImage] = useState<string | null>(null);
   const [showThumbnails] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [showDescription, setShowDescription] = useState(true);
+  const [showDescription, setShowDescription] = useState(false);
   const [showFeatures, setShowFeatures] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProduct() {
+      setIsLoading(true);
       const data = await getProduct(id);
       setProduct(data);
       if (data) {
         setMainImage(data.image);
       }
+      setIsLoading(false);
     }
     fetchProduct();
   }, [id]);
 
-  if (product === null) {
+  const showCartToast = (productName: string, quantity: number) => {
+    toast.custom((t) => (
+      <CartToast productName={productName} quantity={quantity} toastId={t.id} />
+    ));
+  };
+
+  if (isLoading) {
     return (
-      <div className="text-center py-20 text-gray-500 min-h-screen">
-        Product not found.
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
-  if (!product)
+
+  if (!product) {
     return (
-      <div className="mx-auto flex flex-col justify-center items-center gap-2 py-52">
-        <div className="animate-pulse flex space-x-4">
-          <div className="flex-1 space-y-6 py-1">
-            <div className="h-8 w-48 bg-gray-200 rounded"></div>
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            </div>
-          </div>
-        </div>
+      <div className="text-center py-20 text-gray-500 min-h-screen">
+        <p className="mb-4">Product not found.</p>
+        <button
+          onClick={() => router.back()}
+          className="inline-block mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+        >
+          Go Back
+        </button>
       </div>
     );
+  }
 
   const images = [product.image, ...(product.images || [])];
 
@@ -104,7 +121,7 @@ export default function ProductPageWrapper() {
           href="/"
           className="hover:text-primary transition-colors flex items-center gap-1"
         >
-          <FiHome/>
+          <FiHome />
           Home
         </Link>
         <span className="mx-2 text-gray-300">/</span>
@@ -192,7 +209,7 @@ export default function ProductPageWrapper() {
             <span className="text-sm font-medium text-primary">
               {product.brand}
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-1">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-7 mt-1">
               {product.name}
             </h1>
 
@@ -251,30 +268,47 @@ export default function ProductPageWrapper() {
 
           {/* Quantity Selector */}
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-900">Quantity</h3>
+            <h3 className="text-sm font-medium text-gray-7">Quantity</h3>
             <div className="flex items-center border border-gray-200 rounded-lg w-fit">
-              <button
+              <Button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-3 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
+                className="transition-colors"
+                variant="ghost"
               >
                 <FaMinus />
-              </button>
-              <span className="px-4 py-1 text-lg font-medium">{quantity}</span>
-              <button
+              </Button>
+              <span className="px-4 text-lg font-medium">{quantity}</span>
+              <Button
                 onClick={() => setQuantity(quantity + 1)}
-                className="px-3 py-2 text-gray-600 hover:bg-gray-50 transition-colors"
+                className="transition-colors"
+                variant="ghost"
               >
                 <FaPlus />
-              </button>
+              </Button>
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            <button className="flex-1 bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center gap-2">
+            <Button
+              className="flex-1 bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center gap-2"
+              onClick={(e) => {
+                e.preventDefault();
+                addToCart(
+                  {
+                    _id: product._id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                  },
+                  quantity
+                );
+                showCartToast(product.name, quantity);
+              }}
+            >
               <BsCart3 />
               Add to Cart
-            </button>
+            </Button>
             <button className="flex-1 border border-primary text-primary hover:bg-primary/5 py-3 px-6 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center gap-2">
               <HiOutlineShoppingBag />
               Buy Now
@@ -286,7 +320,7 @@ export default function ProductPageWrapper() {
             <div className="space-y-4">
               <div>
                 <h3
-                  className="text-lg font-semibold text-gray-900 flex items-center justify-between cursor-pointer"
+                  className="text-lg font-semibold text-dark flex items-center justify-between cursor-pointer"
                   onClick={() => setShowDescription(!showDescription)}
                 >
                   <span>Description</span>
@@ -304,7 +338,7 @@ export default function ProductPageWrapper() {
 
               <div className="border-t border-gray-100 pt-4">
                 <h3
-                  className="text-lg font-semibold text-gray-900 flex items-center justify-between cursor-pointer"
+                  className="text-lg font-semibold text-dark flex items-center justify-between cursor-pointer"
                   onClick={() => setShowFeatures(!showFeatures)}
                 >
                   <span>Features</span>

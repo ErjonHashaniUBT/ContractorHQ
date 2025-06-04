@@ -1,8 +1,16 @@
-// app/admin/layout.tsx
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react"; // Add useEffect import
+import {
+  FiMenu,
+  FiX,
+  FiHome,
+  FiShoppingBag,
+  FiMessageSquare,
+} from "react-icons/fi";
+import { FaPen } from "react-icons/fa";
 import "@/styles/globals.css";
 
 export default function AdminLayout({
@@ -11,64 +19,112 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // useEffect to handle body scroll
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [mobileOpen]);
+
+  const NavItem = ({
+    href,
+    label,
+    icon,
+    exact = false,
+  }: {
+    href: string;
+    label: string;
+    icon: React.ReactNode;
+    exact?: boolean;
+  }) => {
+    const isActive = exact
+      ? pathname === href || pathname === href + "/"
+      : pathname.startsWith(href);
+
+    return (
+      <Link
+        href={href}
+        className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+          isActive
+            ? "bg-primary-dark text-light"
+            : "hover:bg-primary/10 text-gray-7"
+        }`}
+        onClick={() => setMobileOpen(false)}
+      >
+        <span className="text-lg">{icon}</span>
+        <span>{label}</span>
+      </Link>
+    );
+  };
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-dark text-white p-6 space-y-8 sticky top-0 h-screen border-r border-gray-200">
-        <div className="flex items-center gap-3">
-          <h2 className="text-xl font-bold">Admin Panel</h2>
+    <div className="min-h-screen md:flex bg-theme-white">
+      {/* Mobile Topbar */}
+      <div className="md:hidden flex items-center justify-between bg-primary text-white px-4 py-3">
+        <h2 className="text-lg font-bold">Admin Panel</h2>
+        <button
+          className="text-white"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? (
+            <FiX className="w-6 h-6" />
+          ) : (
+            <FiMenu className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Sidebar - Add overflow-y-auto to allow scrolling just the sidebar if needed */}
+      <aside
+        className={`${
+          mobileOpen ? "block min-w-screen" : "hidden"
+        } md:block w-64 bg-theme-header shadow-lg p-6 space-y-8 md:sticky md:top-0 h-screen absolute overflow-y-auto z-10`}
+      >
+        <div className="flex items-center gap-3 border-b pb-6">
+          <h2 className="text-xl font-bold text-dark">Admin Panel</h2>
         </div>
         <nav className="space-y-1">
-          <Link
+          <NavItem
             href="/admin"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-              pathname === "/admin"
-                ? "bg-primary text-white"
-                : "hover:bg-primary/10"
-            }`}
-          >
-            <span>📊</span>
-            <span>Dashboard</span>
-          </Link>
-          <Link
+            label="Dashboard"
+            icon={<FiHome />}
+            exact={true}
+          />
+          <NavItem
             href="/admin/products"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-              pathname.startsWith("/admin/products")
-                ? "bg-primary text-white"
-                : "hover:bg-primary/10"
-            }`}
-          >
-            <span>🛍️</span>
-            <span>Products</span>
-          </Link>
-          <Link
+            label="Products"
+            icon={<FiShoppingBag className="text-blue-500" />}
+          />
+          <NavItem
             href="/admin/blogs"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-              pathname.startsWith("/admin/blogs")
-                ? "bg-primary text-white"
-                : "hover:bg-primary/10"
-            }`}
-          >
-            <span>✏️</span>
-            <span>Blogs</span>
-          </Link>
-          <Link
+            label="Blogs"
+            icon={<FaPen className="text-green-500" />}
+          />
+          <NavItem
             href="/admin/messages"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-              pathname.startsWith("/admin/messages")
-                ? "bg-primary text-white"
-                : "hover:bg-primary/10"
-            }`}
-          >
-            <span>📩</span>
-            <span>Messages</span>
-          </Link>
+            label="Messages"
+            icon={<FiMessageSquare className="text-purple-500" />}
+          />
         </nav>
       </aside>
 
-      {/* Page content */}
-      <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+      {/* Page content - Add overflow-hidden when mobile menu is open */}
+      <main
+        className={`flex-1 md:p-8 overflow-y-auto bg-gray-50 ${
+          mobileOpen ? "overflow-hidden h-screen" : ""
+        }`}
+      >
+        {children}
+      </main>
     </div>
   );
 }

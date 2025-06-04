@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useBlog } from "@/app/hooks/useBlog";
 import { Button } from "@/components/ui/Button";
+import { FiBook } from "react-icons/fi";
 
 interface Blog {
   _id: string;
@@ -30,11 +31,20 @@ export default function AdminBlogsPage() {
     isPublished: true,
   });
   const { createBlog, deleteBlog, loading, error } = useBlog();
+  const [showForm, setShowForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchBlogs = async () => {
-    const res = await fetch("/api/blogs");
-    const data = await res.json();
-    setBlogs(data);
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/blogs");
+      const data = await res.json();
+      setBlogs(data);
+    } catch (err) {
+      console.error("Error fetching blogs", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -69,106 +79,131 @@ export default function AdminBlogsPage() {
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-8">
-      <h1 className="text-3xl font-bold text-dark mb-6">Admin Blog Page</h1>
-      {/* Blog Creation Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-6 bg-light shadow-lg p-6 rounded-lg"
+    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="flex flex-col items-center mb-8">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-3 bg-primary/10 rounded-full">
+            <FiBook className="h-6 w-6 text-primary" />
+          </div>
+          <h1 className="text-3xl font-bold text-dark">Blog Management</h1>
+        </div>
+        <p className="text-gray-500 text-center max-w-lg">
+          Create, edit, and manage your blog content
+        </p>
+      </div>
+      <Button
+        onClick={() => setShowForm(!showForm)}
+        variant="accent"
+        className="mb-6"
       >
-        <h2 className="text-2xl font-bold text-dark mb-6">
-          Create New Blog Post
-        </h2>
+        {showForm ? "Hide Form" : "Add New Blog"}
+      </Button>
+      {/* Blog Creation Form */}
+      {showForm && (
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-light shadow-lg p-6 rounded-lg"
+        >
+          <h2 className="text-2xl font-bold text-dark mb-6">
+            Create New Blog Post
+          </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Title*
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-7">
+                Title*
+              </label>
+              <input
+                type="text"
+                value={newBlog.title}
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, title: e.target.value })
+                }
+                className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-7">
+                Category*
+              </label>
+              <input
+                type="text"
+                value={newBlog.category}
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, category: e.target.value })
+                }
+                className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2 mb-6">
+            <label className="block text-sm font-medium text-gray-7">
+              Content*
             </label>
-            <input
-              type="text"
-              value={newBlog.title}
+            <textarea
+              value={newBlog.content}
               onChange={(e) =>
-                setNewBlog({ ...newBlog, title: e.target.value })
+                setNewBlog({ ...newBlog, content: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              className="w-full p-3 border border-gray-light rounded-lg min-h-[200px] focus:ring-2 focus:ring-primary focus:border-primary transition"
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Category*
+          <div className="space-y-2 mb-6">
+            <label className="block text-sm font-medium text-gray-7">
+              Image URL
             </label>
             <input
               type="text"
-              value={newBlog.category}
+              value={newBlog.image}
               onChange={(e) =>
-                setNewBlog({ ...newBlog, category: e.target.value })
+                setNewBlog({ ...newBlog, image: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
-              required
+              className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
+              placeholder="/images/blog-1.jpg"
             />
           </div>
-        </div>
 
-        <div className="space-y-2 mb-6">
-          <label className="block text-sm font-medium text-gray-700">
-            Content*
-          </label>
-          <textarea
-            value={newBlog.content}
-            onChange={(e) =>
-              setNewBlog({ ...newBlog, content: e.target.value })
-            }
-            className="w-full p-3 border border-gray-200 rounded-lg min-h-[200px] focus:ring-2 focus:ring-primary focus:border-primary transition"
-            required
-          />
-        </div>
-
-        <div className="space-y-2 mb-6">
-          <label className="block text-sm font-medium text-gray-700">
-            Image URL
-          </label>
-          <input
-            type="text"
-            value={newBlog.image}
-            onChange={(e) => setNewBlog({ ...newBlog, image: e.target.value })}
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
-            placeholder="/images/blog-1.jpg"
-          />
-        </div>
-
-        <div className="flex items-center space-x-3 mb-6">
-          <input
-            type="checkbox"
-            checked={newBlog.isPublished}
-            onChange={(e) =>
-              setNewBlog({ ...newBlog, isPublished: e.target.checked })
-            }
-            className="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded"
-          />
-          <label className="text-sm font-medium text-gray-700">
-            Publish Immediately
-          </label>
-        </div>
-
-        <Button type="submit" size="lg" loading={loading} className="w-full">
-          Create Blog Post
-        </Button>
-
-        {error && (
-          <div className="mt-4 p-4 bg-error/10 text-error rounded-lg">
-            {error}
+          <div className="flex items-center space-x-3 mb-6">
+            <input
+              type="checkbox"
+              checked={newBlog.isPublished}
+              onChange={(e) =>
+                setNewBlog({ ...newBlog, isPublished: e.target.checked })
+              }
+              className="h-5 w-5 text-primary focus:ring-primary border-gray-300 rounded"
+            />
+            <label className="text-sm font-medium text-gray-7">
+              Publish Immediately
+            </label>
           </div>
-        )}
-      </form>
+
+          <Button type="submit" size="lg" loading={loading} className="w-full">
+            Create Blog Post
+          </Button>
+
+          {error && (
+            <div className="mt-4 p-4 bg-error/10 text-error rounded-lg">
+              {error}
+            </div>
+          )}
+        </form>
+      )}
 
       {/* Blog List */}
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-        <h2 className="text-2xl font-bold text-dark mb-6">All Blog Posts</h2>
+      <div className="">
+        <h2 className="text-2xl font-semibold text-dark mb-6">Blog List</h2>
 
-        {blogs.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        ) : blogs.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500">No blog posts found.</p>
           </div>
@@ -177,7 +212,7 @@ export default function AdminBlogsPage() {
             {blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-sm transition"
+                className="bg-light p-6 rounded-lg border border-gray-light hover:shadow-sm transition"
               >
                 {blog.image && (
                   <div className="relative h-48 w-full mb-4 rounded-lg overflow-hidden">
@@ -200,20 +235,18 @@ export default function AdminBlogsPage() {
                 </p>
 
                 <div className="mt-6 flex gap-4 pt-4 border-t border-gray-100">
-                  <Link
-                    href={`/admin/blogs/${blog._id}`}
-                    className="text-primary hover:text-primary-dark flex items-center gap-2 text-sm font-medium"
-                  >
-                    <span>✏️</span>
-                    <span>Edit</span>
+                  <Link href={`/admin/blogs/${blog._id}`}>
+                    <span className="text-primary hover:bg-primary-lighter px-3 py-1.5 text-xs rounded-lg">
+                      Edit
+                    </span>
                   </Link>
-                  <button
+                  <Button
                     onClick={() => handleDelete(blog._id)}
-                    className="text-error hover:text-error-dark flex items-center gap-2 text-sm font-medium"
+                    variant="danger"
+                    size="sm"
                   >
-                    <span>🗑</span>
-                    <span>Delete</span>
-                  </button>
+                    Delete
+                  </Button>
                 </div>
               </div>
             ))}

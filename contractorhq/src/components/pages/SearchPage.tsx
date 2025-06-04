@@ -74,7 +74,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10 min-h-screen">
+    <div className="px-4 py-10 min-h-screen bg-light">
       <h1 className="text-3xl font-bold mb-6">Search Products</h1>
 
       <div className="flex flex-col md:flex-row gap-4 mb-10">
@@ -91,7 +91,7 @@ export default function SearchPage() {
             />
             <button
               onClick={handleSearch}
-              className="p-2 text-gray-600 hover:text-primary"
+              className="p-2 text-gray-six hover:text-primary"
               aria-label="Search"
             >
               <FiSearch className="w-5 h-5" />
@@ -106,9 +106,9 @@ export default function SearchPage() {
             onChange={(e) => setBrand(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
-            <option value="">All Brands</option>
+            <option value="" className="text-gray-800">All Brands</option>
             {BRANDS.map((b) => (
-              <option key={b} value={b}>
+              <option className="text-gray-800" key={b} value={b}>
                 {b}
               </option>
             ))}
@@ -122,9 +122,9 @@ export default function SearchPage() {
             onChange={(e) => setCategory(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
           >
-            <option value="">All Categories</option>
+            <option value="" className="text-gray-800">All Categories</option>
             {categories.map((cat) => (
-              <option key={cat} value={cat}>
+              <option className="text-gray-800" key={cat} value={cat}>
                 {cat}
               </option>
             ))}

@@ -3,6 +3,8 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { FiMail } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 interface Message {
   name: string;
@@ -23,6 +25,7 @@ export default function AdminMessagesPage() {
         setMessages(data.reverse());
       } catch (err) {
         console.error("Error fetching messages", err);
+        toast.error("Failed to load messages"); // Error toast
       } finally {
         setLoading(false);
       }
@@ -31,11 +34,25 @@ export default function AdminMessagesPage() {
     fetchMessages();
   }, []);
 
+  const handleRefresh = () => {
+    toast.loading("Refreshing messages..."); // Loading toast
+    window.location.reload();
+  };
+
   return (
     <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-dark">Contact Messages</h1>
-        <Button variant="ghost" onClick={() => window.location.reload()}>
+      <div className="flex justify-between items-center">
+        <div className="flex flex-col mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <FiMail className="h-6 w-6 text-primary" />
+            </div>
+            <h1 className="text-2xl font-bold text-dark">Contact Messages</h1>
+          </div>
+          <p className="text-gray-500">View and manage customer inquiries</p>
+        </div>
+        
+        <Button variant="ghost" onClick={handleRefresh}>
           Refresh
         </Button>
       </div>
@@ -61,7 +78,7 @@ export default function AdminMessagesPage() {
                     {msg.name}
                   </h2>
                   <p className="text-sm text-primary-dark mb-2">{msg.email}</p>
-                  <p className="text-gray-800 whitespace-pre-line">
+                  <p className="text-gray-800 whitespace-pre-line max-w-[800px]">
                     {msg.message}
                   </p>
                 </div>

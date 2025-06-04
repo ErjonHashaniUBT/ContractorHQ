@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/ui/HeroSection";
+import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/ui/FeaturedProducts";
 
 interface Product {
@@ -7,6 +8,7 @@ interface Product {
   price: number;
   image: string;
   isOnSale: boolean;
+  category: string;
 }
 
 export const metadata = {
@@ -33,7 +35,7 @@ export default async function Home() {
       next: { revalidate: 60 },
     });
 
-    // Check if response is OK (status 200-299)
+    // Checks if response is OK (status 200-299)
     if (!res.ok) {
       const errorText = await res.text();
       console.error("API Error:", errorText);
@@ -48,10 +50,11 @@ export default async function Home() {
 
   return (
     <>
-      <section>
-        <HeroSection />
-        <FeaturedSection products={products} />
-      </section>
+        <section>
+          <HeroSection />
+          <FeaturedSection products={products} />
+          <Footer/>
+        </section>
     </>
   );
 }
