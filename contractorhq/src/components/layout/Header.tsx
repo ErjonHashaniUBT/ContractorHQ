@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   FiSearch,
   FiShoppingCart,
-  FiUser,
   FiChevronDown,
   FiHome,
   FiShoppingBag,
@@ -18,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCartStore } from "@/lib/store/cart";
 import ThemeToggle from "../theme/ThemeToggle";
+import AuthButtons from "../auth/AuthButtons";
 
 export default function Header() {
   const shopLinks = {
@@ -41,25 +41,47 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-theme-header shadow-sm">
+    <header className="sticky top-0 z-50 bg-light shadow-sm border-b-1 border-gray-light">
       <div className="flex items-center justify-between px-6 py-4">
+        {/* Mobile Menu - Hamburger */}
+        <div className="flex lg:hidden">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="inline-flex items-center justify-center p-2 rounded-md text-dark hover:text-primary focus:outline-none"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open menu</span>
+            {mobileMenuOpen ? (
+              <FiX className="block h-6 w-6" />
+            ) : (
+              <FiMenu className="block h-6 w-6" />
+            )}
+          </button>
+        </div>
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center hover:scale-105 duration-200"
+          className="flex items-center hover:scale-105 duration-200 mx-auto lg:mx-0"
         >
           <Image
             src="/images/logos/contractor-logo.png"
             alt="ContractorHQ Logo"
             width={160}
             height={40}
-            className="object-contain"
+            className="object-contain hidden lg:block"
             priority
+          />
+          <Image
+            src="/images/logos/contractor-logo.png"
+            alt="ContractorHQ"
+            width={120}
+            height={30}
+            className="block lg:hidden object-contain"
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           <Link
             href="/"
             className="font-medium text-dark hover:text-primary transition-colors duration-200 flex items-center gap-1"
@@ -70,19 +92,21 @@ export default function Header() {
 
           <div className="relative group">
             <div className="font-medium text-dark hover:text-primary transition-colors duration-200 flex items-center gap-1 cursor-pointer">
-              <FiShoppingBag className="w-4 h-4" />
-              <Link href="/shop">Shop</Link>
+              <Link href="/shop" className="flex items-center gap-1">
+                <FiShoppingBag className="w-4 h-4" />
+                Shop
+              </Link>
               <FiChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
             </div>
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[240px] bg-theme-white rounded-lg shadow-xl py-2 z-50 border border-gray-100 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
-              <div className="px-4 py-2 border-b border-gray-100">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[240px] bg-light rounded-lg shadow-xl py-2 z-50 border-1 border-gray-light invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
+              <div className="px-4 py-2 border-b border-light">
                 <h3 className="text-sm font-semibold text-dark">
                   Shop Categories
                 </h3>
               </div>
               <Link
                 href={shopLinks.allProducts}
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   All Products
@@ -90,7 +114,7 @@ export default function Header() {
               </Link>
               <Link
                 href={shopLinks.specialDeals}
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   Special Deals
@@ -98,28 +122,28 @@ export default function Header() {
               </Link>
               <Link
                 href={shopLinks.newArrivals}
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   New Arrivals
                 </span>
               </Link>
               <div className="relative group/brands">
-                <div className="flex justify-between items-center px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 cursor-pointer">
+                <div className="flex justify-between items-center px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 cursor-pointer">
                   <span className="group-hover/brands:ml-1 transition-all duration-150">
                     Brands
                   </span>
                   <FiChevronDown className="ml-2 h-4 w-4 transition-transform duration-200 group-hover/brands:rotate-180" />
                 </div>
-                <div className="absolute top-0 left-full ml-1 w-64 bg-theme-white rounded-r-lg shadow-xl border border-gray-100 opacity-0 group-hover/brands:opacity-100 invisible group-hover/brands:visible transition-all duration-200 transform group-hover/brands:translate-x-0 -translate-x-1">
-                  <div className="px-4 py-2 border-b border-gray-100">
+                <div className="absolute top-0 left-full ml-1 w-64 bg-light rounded-r-lg shadow-xl border-1 border-gray-light opacity-0 group-hover/brands:opacity-100 invisible group-hover/brands:visible transition-all duration-200 transform group-hover/brands:translate-x-0 -translate-x-1">
+                  <div className="px-4 py-2 border-b border-light">
                     <h3 className="text-sm font-semibold text-dark">
                       Featured Brands
                     </h3>
                   </div>
                   <Link
                     href="/brands/Makita"
-                    className="block px-4 py-3 hover:bg-hover-gray-50 transition-colors duration-150"
+                    className="block px-4 py-3 hover:bg-gray-hundred transition-colors duration-150"
                   >
                     <div className="relative w-[120px] h-6">
                       <Image
@@ -133,7 +157,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href="/brands/DeWalt"
-                    className="block px-4 py-3 hover:bg-hover-gray-50 transition-colors duration-150"
+                    className="block px-4 py-3 hover:bg-gray-hundred transition-colors duration-150"
                   >
                     <div className="relative h-6 w-[120px]">
                       <Image
@@ -148,7 +172,7 @@ export default function Header() {
                   </Link>
                   <Link
                     href="/brands/Milwaukee"
-                    className="block px-4 py-3 hover:bg-hover-gray-50 transition-colors duration-150"
+                    className="block px-4 py-3 hover:bg-gray-hundred transition-colors duration-150"
                   >
                     <div className="relative h-6 w-[120px]">
                       <Image
@@ -188,15 +212,15 @@ export default function Header() {
                 <FiChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </Link>
             </div>
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-theme-white rounded-lg shadow-xl py-2 z-50 border border-gray-100 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
-              <div className="px-4 py-2 border-b border-gray-100">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-light rounded-lg shadow-xl py-2 z-50 border-1 border-gray-light invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
+              <div className="px-4 py-2 border-b border-light">
                 <h3 className="text-sm font-semibold text-dark">
                   Support Center
                 </h3>
               </div>
               <Link
                 href="/support#contact"
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   Contact Us
@@ -204,7 +228,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/support#faq"
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   FAQ
@@ -212,7 +236,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/support#returns"
-                className="block px-4 py-2.5 text-sm text-dark hover:bg-hover-gray-50 transition-colors duration-150 group/item"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
               >
                 <span className="group-hover/item:ml-1 transition-all duration-150">
                   Returns Policy
@@ -253,55 +277,76 @@ export default function Header() {
                     );
                   }
                 }}
-                className="w-full h-10 pl-10 pr-4 border border-gray-200 bg-theme-white text-dark rounded-full focus:border-primary"
+                className="w-full h-10 pl-10 pr-4 border border-gray-200 bg-light text-dark rounded-full focus:border-primary"
               />
             </div>
           </div>
 
-          <Link
-            href="/cart"
-            className="relative text-dark hover:text-primary transition-colors duration-200"
-          >
-            <FiShoppingCart className="w-6 h-6" />
-            {cartItemsCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-white">
-                {cartItemsCount}
-              </span>
-            )}
-          </Link>
+          {/* Right side icons - RIGHT */}
+          <div className="flex items-center justify-end">
+            {/* Cart */}
+            <Link href="/cart" className="p-2 relative">
+              <FiShoppingCart className="h-6 w-6 text-dark hover:text-primary" />
+              {cartItemsCount > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold text-white bg-primary rounded-full">
+                  {cartItemsCount}
+                </span>
+              )}
+            </Link>
 
-          <ThemeToggle/>
+            {/* Theme Toggle (hidden on mobile) */}
+            <div className="hidden sm:block ml-2">
+              <ThemeToggle />
+            </div>
 
-          <Link
-            href="/admin"
-            className="text-dark hover:text-primary transition-colors duration-200"
-          >
-            <FiUser className="w-6 h-6" />
-          </Link>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 text-dark hover:text-primary transition-colors duration-200"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-          >
-            {mobileMenuOpen ? (
-              <FiX className="w-6 h-6" />
-            ) : (
-              <FiMenu className="w-6 h-6" />
-            )}
-          </button>
+            {/* Auth Buttons */}
+            <div className="ml-2">
+              <AuthButtons />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu panel */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] bg-theme-white z-40 overflow-y-auto transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed inset-0 top-[75px] bg-light z-40 overflow-y-auto transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="container mx-auto px-6 py-4">
           <nav className="flex flex-col space-y-6">
+            {/* Static Search Bar - Mobile Header*/}
+            <div className="flex items-center p-2 w-full">
+              <FiSearch
+                className="h-5 w-5 text-dark mr-2 cursor-pointer"
+                onClick={() => {
+                  if (searchTerm.trim()) {
+                    router.push(
+                      `/search?q=${encodeURIComponent(
+                        searchTerm.trim()
+                      )}&t=${Date.now()}`
+                    );
+                    setMobileMenuOpen(false);
+                  }
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && searchTerm.trim()) {
+                    router.replace(
+                      `/search?q=${encodeURIComponent(searchTerm.trim())}`
+                    );
+                    setMobileMenuOpen(false);
+                  }
+                }}
+                className="flex-1 h-10 pl-4 pr-4 border border-gray-200 bg-light text-dark rounded-lg focus:border-primary"
+              />
+            </div>
+
             {/* Home */}
             <Link
               href="/"
