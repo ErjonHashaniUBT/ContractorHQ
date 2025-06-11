@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="relative group border border-gray-hundred rounded-2xl overflow-hidden bg-theme-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/20">
+    <div className="relative group border border-gray-hundred rounded-2xl overflow-hidden bg-gray-hundred hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/20">
       {/* Sale Ribbon - Modern design */}
       {product.isOnSale && (
         <div className="absolute top-4 right-4 z-10 bg-error text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
@@ -51,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Image Container */}
       <Link href={`/shop/${product._id}`} className="block overflow-hidden">
-        <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200">
           <Image
             src={product.image}
             alt={product.name}
@@ -196,24 +196,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </div>
-
-      {/* Wishlist Button - Absolute positioned */}
-      <button className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors duration-200">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-600 hover:text-error transition-colors"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-          />
-        </svg>
-      </button>
     </div>
   );
 }
