@@ -10,7 +10,7 @@ import { Button } from "../ui/Button";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0369a1] text-white">
+    <footer className="bg-theme-hero text-white">
       <div className="container mx-auto px-6 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">

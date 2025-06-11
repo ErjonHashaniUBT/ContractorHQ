@@ -1,4 +1,4 @@
-// components/CartToast.tsx
+// components/ui/CartToast.tsx
 import React from "react";
 import { BsCart3 } from "react-icons/bs";
 import toast from "react-hot-toast";

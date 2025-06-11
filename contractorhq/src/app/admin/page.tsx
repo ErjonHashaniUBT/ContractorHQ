@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function AdminDashboard() {
   return (
-    <div className="bg-light p-8 rounded-xl shadow-sm border border-card-border max-w-4xl mx-auto">
+    <div className="bg-light p-8 rounded-xl shadow-lg border border-light max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold text-text-primary mb-4">
         Welcome to the Admin Dashboard
       </h1>
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Activity Card */}
-        <div className="bg-gray-50 dark:bg-gray-50/10 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="bg-gray-50 dark:bg-gray-50/10 p-6 rounded-lg border border-gray-five">
           <h2 className="text-text-primary mb-2">Recent Activity</h2>
           <p className="text-text-secondary text-sm">No recent activity</p>
         </div>

@@ -12,7 +12,7 @@ const generateSlug = (title: string) => {
     .slice(0, 100); // Limit to 100 characters
 };
 
-// Ensure database connection before performing any actions
+// Ensure database connection
 export async function GET() {
   await connectToDatabase();
 
@@ -31,16 +31,14 @@ export async function POST(request: NextRequest) {
   await connectToDatabase();
 
   try {
-    const body = await request.json(); // Get the blog data from the request body
+    const body = await request.json(); 
 
-    // Ensure 'slug' is provided. If not, generate it from the title
     if (!body.slug) {
-      body.slug = generateSlug(body.title); // Generate slug from the title
+      body.slug = generateSlug(body.title);
     }
 
-    // Ensure 'author' is provided. If not, use a default value
     if (!body.author) {
-      body.author = "Admin"; // Default to "Admin" if author is not provided
+      body.author = "Admin";
     }
 
     // Create a new blog post
@@ -48,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newBlog, { status: 201 });
   } catch (err: any) {
-    console.error("Error creating blog:", err); // Log the full error to see what went wrong
+    console.error("Error creating blog:", err);
     return NextResponse.json(
       { error: `Error creating blog: ${err.message}` },
       { status: 500 }
@@ -60,8 +58,8 @@ export async function PUT(request: NextRequest) {
   await connectToDatabase();
 
   try {
-    const body = await request.json(); // Get the updated data
-    const id = new URL(request.url).searchParams.get("id"); // Get the blog ID from the query parameter
+    const body = await request.json();
+    const id = new URL(request.url).searchParams.get("id");
 
     if (!id) {
       return NextResponse.json(
@@ -70,7 +68,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true }); // Update the blog post
+    const updatedBlog = await Blog.findByIdAndUpdate(id, body, { new: true });
 
     return updatedBlog
       ? NextResponse.json(updatedBlog, { status: 200 })
@@ -87,7 +85,7 @@ export async function DELETE(request: NextRequest) {
   await connectToDatabase();
 
   try {
-    const id = new URL(request.url).searchParams.get("id"); // Get the blog ID from the query parameter
+    const id = new URL(request.url).searchParams.get("id"); 
 
     if (!id) {
       return NextResponse.json(
@@ -96,7 +94,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const deletedBlog = await Blog.findByIdAndDelete(id); // Delete the blog post
+    const deletedBlog = await Blog.findByIdAndDelete(id);
 
     return deletedBlog
       ? NextResponse.json(

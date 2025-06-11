@@ -21,7 +21,7 @@ const faqs = [
   {
     question: "Do you offer international shipping?",
     answer:
-      "Yes, we ship to most countries worldwide. Additional fees may apply.",
+      "No, we ship to Albania, Kosovo, North Macedonia and Montenegro. Additional fees may apply for other regions.",
   },
   {
     question: "What is your warranty policy?",

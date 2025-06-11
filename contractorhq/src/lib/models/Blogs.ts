@@ -8,7 +8,7 @@ export interface IBlog extends Document {
   category: string;
   image?: string;
   isPublished: boolean;
-  slug: string; // For SEO-friendly URLs
+  slug: string;
 }
 
 // Check if the model already exists to prevent overwriting
@@ -19,12 +19,11 @@ const BlogSchema = new Schema<IBlog>(
     author: { type: String, required: true },
     publishedDate: { type: Date, default: Date.now },
     category: { type: String, required: true },
-    image: { type: String }, // Optional image for the blog post
+    image: { type: String }, 
     isPublished: { type: Boolean, default: true },
-    slug: { type: String, required: true, unique: true }, // Slug for SEO-friendly URL
+    slug: { type: String, required: true, unique: true },
   },
-  { timestamps: true } // This will automatically handle createdAt and updatedAt
+  { timestamps: true } // Automatically handle createdAt and updatedAt
 );
 
-// If the model is already defined, return the existing model, otherwise define it
 export const Blog = models.Blog || model<IBlog>("Blog", BlogSchema);

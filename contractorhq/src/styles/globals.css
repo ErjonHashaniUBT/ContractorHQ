@@ -3,6 +3,7 @@
 @theme {
   --color-theme-white: #ffffff;
   --color-theme-header:#ffffff;
+  --color-theme-hero:#0369a1;
 
   --color-primary: #0369a1;
   --color-primary-light: #0ea5e9;
@@ -23,16 +24,20 @@
 
   --color-gray-50:#f9fafb;
   --color-gray-hundred: #f3f4f6;
+  --color-gray-five:#9E9E9E;
   --color-gray-six:#4a5565;
   --color-gray-7: #2d3748;
 
   --color-hover-gray-50:#f9fafb;
+
+  --color-admin-auth:#EFF6FF;
 }
 
 .dark {
   /* Backgrounds */
   --color-theme-white: #0f0f1a; /* Dark navy base (slightly more modern than pure dark) */
   --color-theme-header:#070728;
+  --color-theme-hero:#00293e;
   
   
   /* Text & surfaces */
@@ -42,7 +47,8 @@
   
   /* Grays */
   --color-gray-50:#1c1c30;;
-  --color-gray-hundred: #1a1b2e; /* Darker navy for subtle backgrounds */
+  --color-gray-hundred: #1d1d27; /* Darker navy for subtle backgrounds */
+  --color-gray-five:#e5e7eb;
   --color-gray-six: #e5e7eb; /* Light gray for secondary text */
   --color-gray-7: #e5e7eb; /* Light gray for secondary text */
   
@@ -59,7 +65,9 @@
   --color-success: #4ade80; /* Brighter green */
   --color-error: #f87171; /* Softer red (better for dark backgrounds) */
 
-  --color-hover-gray-50:#111151; /* Darker hover:bg-gray-50*/
+  --color-hover-gray-50:#191919; /* Darker hover:bg-gray-50*/
+
+  --color-admin-auth:#001f47;
 }
 
 

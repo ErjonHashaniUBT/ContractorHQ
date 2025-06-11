@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import "@/styles/globals.css";
 import Header from "@/components/layout/Header";
 import { Toaster } from "react-hot-toast";
+import Providers from "@/components/provider/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true} disableTransitionOnChange>
-          <Header />
-          {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem={true}
+          disableTransitionOnChange
+        >
+          <Providers>
+            <Header />
+            {children}
+          </Providers>
           <Toaster
             position="top-right"
             gutter={12}

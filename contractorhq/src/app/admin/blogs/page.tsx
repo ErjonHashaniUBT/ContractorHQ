@@ -79,7 +79,7 @@ export default function AdminBlogsPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8 p-8">
       <div className="flex flex-col items-center mb-8">
         <div className="flex items-center gap-3 mb-2">
           <div className="p-3 bg-primary/10 rounded-full">
@@ -165,7 +165,7 @@ export default function AdminBlogsPage() {
                 setNewBlog({ ...newBlog, image: e.target.value })
               }
               className="w-full p-3 border border-gray-light rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition"
-              placeholder="/images/blog-1.jpg"
+              placeholder="/images/blogs/blog-1.jpg"
             />
           </div>
 
@@ -208,7 +208,7 @@ export default function AdminBlogsPage() {
             <p className="text-gray-500">No blog posts found.</p>
           </div>
         ) : (
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {blogs.map((blog) => (
               <div
                 key={blog._id}
