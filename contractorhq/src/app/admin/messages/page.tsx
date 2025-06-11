@@ -40,7 +40,7 @@ export default function AdminMessagesPage() {
   };
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+    <div className="bg-light p-8 rounded-xl shadow-sm border border-light">
       <div className="flex justify-between items-center">
         <div className="flex flex-col mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -49,7 +49,7 @@ export default function AdminMessagesPage() {
             </div>
             <h1 className="text-2xl font-bold text-dark">Contact Messages</h1>
           </div>
-          <p className="text-gray-500">View and manage customer inquiries</p>
+          <p className="text-gray-five">View and manage customer inquiries</p>
         </div>
         
         <Button variant="ghost" onClick={handleRefresh}>
@@ -63,14 +63,14 @@ export default function AdminMessagesPage() {
         </div>
       ) : messages.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">No messages found.</p>
+          <p className="text-gray-five">No messages found.</p>
         </div>
       ) : (
         <ul className="space-y-4">
           {messages.map((msg, i) => (
             <li
               key={i}
-              className="p-6 border border-gray-200 rounded-lg hover:shadow-sm transition"
+              className="p-6 border border-gray-light rounded-lg hover:shadow-sm transition"
             >
               <div className="flex justify-between items-start">
                 <div>
@@ -78,7 +78,7 @@ export default function AdminMessagesPage() {
                     {msg.name}
                   </h2>
                   <p className="text-sm text-primary-dark mb-2">{msg.email}</p>
-                  <p className="text-gray-800 whitespace-pre-line max-w-[800px]">
+                  <p className="text-gray-7 whitespace-pre-line max-w-[800px]">
                     {msg.message}
                   </p>
                 </div>

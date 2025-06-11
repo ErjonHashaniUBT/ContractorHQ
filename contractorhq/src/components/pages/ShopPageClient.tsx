@@ -42,7 +42,7 @@ export default function ShopPageClient({
 
   return (
     <>
-      <div className="px-4 py-8 relative bg-theme-white">
+      <div className="px-4 py-8 relative bg-light">
         {/* Breadcrumb */}
         <div className="mb-6">
           <nav className="flex items-center text-sm text-gray-400 mb-4">

@@ -29,7 +29,7 @@ export default function ThemeToggle() {
       {theme === "dark" ? (
         <FaSun className="text-yellow-400" />
       ) : (
-        <FaMoon className="text-gray-900 dark:text-gray-100" />
+        <FaMoon className="text-dark" />
       )}
     </button>
   );

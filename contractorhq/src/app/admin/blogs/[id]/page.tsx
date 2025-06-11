@@ -39,7 +39,7 @@ export default function EditBlogPage() {
         });
       } catch (err: any) {
         setError(err.message);
-        toast.error(err.message); // Show error toast
+        toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -73,11 +73,11 @@ export default function EditBlogPage() {
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Update failed");
 
-      toast.success("Blog updated successfully."); // Success toast instead of alert
+      toast.success("Blog updated successfully.");
       router.push("/admin/blogs");
     } catch (err: any) {
       setError(err.message);
-      toast.error(err.message); // Error toast
+      toast.error(err.message);
     } finally {
       setUpdating(false);
     }
@@ -154,7 +154,7 @@ export default function EditBlogPage() {
             name="image"
             value={blog.image}
             onChange={handleChange}
-            placeholder="/images/blog-1.jpg"
+            placeholder="/images/blogs/blog-1.jpg"
             className="w-full p-3 border border-gray-light rounded-lg"
           />
         </div>

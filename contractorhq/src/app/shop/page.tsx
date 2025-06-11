@@ -24,13 +24,21 @@ async function getProducts(category?: string): Promise<Product[]> {
   return res.json();
 }
 
-interface ShopPageProps {
-  searchParams?: { category?: string };
+interface Props {
+  searchParams: Promise<{ category?: string | string[] }>;
 }
 
-export default async function ShopPage({ searchParams }: ShopPageProps) {
-  const selectedCategory = searchParams?.category ?? "all";
-  const products = await getProducts(selectedCategory);
+export const dynamic = "force-dynamic";
 
-  return <ShopPageClient products={products} initialCategory={selectedCategory} />;
+export default async function ShopPage({ searchParams }: Props) {
+  const params = await searchParams;
+
+  const categoryParam = params?.category;
+  const category = Array.isArray(categoryParam)
+    ? categoryParam[0]
+    : categoryParam ?? "all";
+
+  const products = await getProducts(category);
+
+  return <ShopPageClient products={products} initialCategory={category} />;
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FiTool, FiBattery, FiZap, FiShield, FiGlobe } from "react-icons/fi";
+import { FiTool, FiBattery, FiZap, FiShield, FiGlobe, FiArrowRight } from "react-icons/fi";
 
 const brands = ["Makita", "Milwaukee", "DeWalt", "Bosch", "Stihl"];
 
@@ -68,7 +68,7 @@ const brandSpecialties: { [key: string]: string[] } = {
 
 const BrandOverviewPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-light to-gray-hundred">
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
@@ -125,7 +125,7 @@ const BrandOverviewPage = () => {
           {brands.map((brand) => (
             <div
               key={`panel-${brand}`}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden"
+              className="bg-light rounded-2xl shadow-xl overflow-hidden border-1 border-gray-light"
             >
               <div className="flex flex-col md:flex-row">
                 {/* Brand Header with Gradient */}
@@ -151,15 +151,15 @@ const BrandOverviewPage = () => {
                 {/* Brand Details */}
                 <div className="md:w-2/3 p-8">
                   <div className="mb-8">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                      <FiTool className="w-6 h-6 mr-2 text-gray-700" />
+                    <h3 className="text-xl font-bold text-gray-7 mb-4 flex items-center">
+                      <FiTool className="w-6 h-6 mr-2 text-gray-7" />
                       Product Specialties
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {brandSpecialties[brand].map((specialty, index) => (
                         <span
                           key={index}
-                          className="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium"
+                          className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium"
                         >
                           {specialty}
                         </span>
@@ -169,12 +169,12 @@ const BrandOverviewPage = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex items-start">
-                      <FiBattery className="w-8 h-8 mr-4 flex-shrink-0 text-gray-700" />
+                      <FiBattery className="w-8 h-8 mr-4 flex-shrink-0 text-gray-7" />
                       <div>
-                        <h4 className="font-bold text-gray-800 mb-2">
+                        <h4 className="font-bold text-gray-7 mb-2">
                           Power Systems
                         </h4>
-                        <p className="text-gray-600">
+                        <p className="text-gray-five">
                           {brand === "Makita" &&
                             "18V LXT & 40V XGT battery platforms with rapid charging"}
                           {brand === "Milwaukee" &&
@@ -190,12 +190,12 @@ const BrandOverviewPage = () => {
                     </div>
 
                     <div className="flex items-start">
-                      <FiZap className="w-8 h-8 mr-4 flex-shrink-0 text-gray-700" />
+                      <FiZap className="w-8 h-8 mr-4 flex-shrink-0 text-gray-7" />
                       <div>
-                        <h4 className="font-bold text-gray-800 mb-2">
+                        <h4 className="font-bold text-gray-7 mb-2">
                           Key Innovation
                         </h4>
-                        <p className="text-gray-600">
+                        <p className="text-gray-five">
                           {brand === "Makita" &&
                             "Anti-Vibration Technology (AVT) for extended use comfort"}
                           {brand === "Milwaukee" &&
@@ -211,12 +211,12 @@ const BrandOverviewPage = () => {
                     </div>
 
                     <div className="flex items-start">
-                      <FiShield className="w-8 h-8 mr-4 flex-shrink-0 text-gray-700" />
+                      <FiShield className="w-8 h-8 mr-4 flex-shrink-0 text-gray-7" />
                       <div>
-                        <h4 className="font-bold text-gray-800 mb-2">
+                        <h4 className="font-bold text-gray-7 mb-2">
                           Durability
                         </h4>
-                        <p className="text-gray-600">
+                        <p className="text-gray-five">
                           {brand === "Makita" &&
                             "Industrial-grade construction with metal gear housings"}
                           {brand === "Milwaukee" &&
@@ -232,12 +232,12 @@ const BrandOverviewPage = () => {
                     </div>
 
                     <div className="flex items-start">
-                      <FiGlobe className="w-8 h-8 mr-4 flex-shrink-0 text-gray-700" />
+                      <FiGlobe className="w-8 h-8 mr-4 flex-shrink-0 text-gray-7" />
                       <div>
-                        <h4 className="font-bold text-gray-800 mb-2">
+                        <h4 className="font-bold text-gray-7 mb-2">
                           Professional Use
                         </h4>
-                        <p className="text-gray-600">
+                        <p className="text-gray-five">
                           {brand === "Makita" &&
                             "Trusted by contractors in construction and woodworking"}
                           {brand === "Milwaukee" &&
@@ -256,21 +256,10 @@ const BrandOverviewPage = () => {
                   <div className="mt-8 text-center">
                     <Link
                       href={`/brands/${brand}`}
-                      className="inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white font-bold rounded-lg transition-all duration-300 hover:bg-gray-800 hover:scale-[1.02]"
+                      className="inline-flex items-center justify-center px-6 py-3 bg-dark text-light font-bold rounded-lg transition-all duration-300 hover:bg-gray-7 hover:scale-[1.02]"
                     >
                       View Full {brand} Product Line
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 ml-2"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <FiArrowRight className="h-5 w-5 ml-2"/>
                     </Link>
                   </div>
                 </div>

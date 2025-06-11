@@ -17,7 +17,7 @@ async function getBlogs(): Promise<Blog[]> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/blogs`, {
     // ISR: Revalidate every 60 seconds
     next: { revalidate: 60 },
-    cache: "force-cache", // optional for clarity
+    cache: "force-cache",
   });
 
   if (!res.ok) {
@@ -32,7 +32,7 @@ export default async function BlogListPage() {
   const blogs = await getBlogs();
 
   return (
-    <>
+    <section className="bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-screen">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-blue-600 bg-clip-text text-transparent mb-4">
@@ -77,7 +77,7 @@ export default async function BlogListPage() {
                   variant="ghost"
                   className="group flex items-center text-indigo-600 hover:text-indigo-700 px-0"
                 >
-                  <Link href={`/blogs/${blog._id}`}>
+                  <Link href={`/blogs/${blog._id}`} className="flex items-center space-x-1">
                     Read more
                     <FiArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
                   </Link>
@@ -88,6 +88,6 @@ export default async function BlogListPage() {
         </div>
       </div>
       <Footer />
-    </>
+    </section>
   );
 }

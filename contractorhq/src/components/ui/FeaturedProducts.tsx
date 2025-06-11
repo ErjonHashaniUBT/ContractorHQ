@@ -17,7 +17,7 @@ interface Product {
 export default function FeaturedSection({ products }: { products: Product[] }) {
   return (
     <motion.section
-      className="py-20 px-6 bg-theme-white shadow-xl"
+      className="py-20 px-6 bg-light shadow-xl"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
