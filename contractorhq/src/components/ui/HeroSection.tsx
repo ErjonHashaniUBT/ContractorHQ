@@ -3,8 +3,8 @@ import { useState, useEffect, JSX } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { FiArrowRight } from "react-icons/fi"; 
 
-// Mock data - replace with your actual images
 const HERO_IMAGES = [
   {
     src: "/images/hero/hero.png",
@@ -53,7 +53,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col lg:flex-row bg-primary-dark overflow-hidden">
+    <div className="relative w-full min-h-screen flex flex-col lg:flex-row bg-theme-hero overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -98,16 +98,7 @@ export function HeroSection() {
               className="flex items-center justify-center gap-3 rounded-xl bg-accent px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-accent-dark transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
             >
               Shop Collection
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <FiArrowRight/>
             </Link>
             <Link
               href="/shop?category=deals"
@@ -121,7 +112,7 @@ export function HeroSection() {
 
       {/* Image Slider */}
       <div className="w-full lg:w-1/2 relative h-[50vh] sm:h-[60vh] lg:h-auto mb-24">
-        <div className="absolute inset-0 bg-gradient-to-l from-primary-dark/40 to-transparent z-10" />
+        <div className="invisible lg:visible absolute inset-0 bg-gradient-to-l from-primary-dark/40 to-transparent z-10" />
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -161,7 +152,7 @@ export function HeroSection() {
 
       {/* Brand Marquee*/}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 py-6 bg-gradient-to-t from-primary-dark/90 via-primary-dark/50 to-transparent z-20"
+        className="absolute bottom-0 left-0 right-0 py-6 bg-gradient-to-t from-theme-hero/90 via-theme-hero/50 to-transparent z-20"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4 }}
