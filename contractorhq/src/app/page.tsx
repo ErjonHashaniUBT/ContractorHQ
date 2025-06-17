@@ -1,6 +1,8 @@
 import { HeroSection } from "@/components/ui/HeroSection";
 import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/ui/FeaturedProducts";
+import SocialLinks from "@/components/ui/SocialLinks";
+import CustomerReviews from "@/components/ui/CustomerReviews";
 
 interface Product {
   _id: string;
@@ -31,7 +33,7 @@ export default async function Home() {
         ? "http://localhost:3000"
         : process.env.NEXT_PUBLIC_SITE_URL;
 
-    const res = await fetch(`${baseURL}/api/products`, {
+    const res = await fetch(`${baseURL}/api/deals`, {
       next: { revalidate: 60 },
     });
 
@@ -53,6 +55,8 @@ export default async function Home() {
         <section>
           <HeroSection />
           <FeaturedSection products={products} />
+          <CustomerReviews/>
+          <SocialLinks/>
           <Footer/>
         </section>
     </>

@@ -499,6 +499,18 @@ export default function Header() {
                 </div>
               )}
             </div>
+
+            {/* Theme - dark mode */}
+            <div className="block sm:hidden">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-gray-7">
+                  Appearance
+                </span>
+                <span className="bg-primary-light rounded-lg">
+                  <ThemeToggle />
+                </span>
+              </div>
+            </div>
           </nav>
         </div>
       </div>

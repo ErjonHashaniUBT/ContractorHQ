@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedin,
-  FaEnvelope,
-} from "react-icons/fa";
-import { Button } from "../ui/Button";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaChevronRight } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -68,52 +61,49 @@ export default function Footer() {
               Support
             </h3>
             <ul className="space-y-3">
-              {["Contact Us", "FAQ", "Returns Policy", "Shipping Info"].map(
-                (item) => (
-                  <li key={item}>
-                    <Link
-                      href={`/support#${item.toLowerCase().replace(" ", "")}`}
-                      className="text-primary-lighter/90 hover:text-white transition-colors flex items-start gap-2"
-                    >
-                      <span className="mt-1 h-1 w-1 rounded-full bg-accent-light opacity-0 hover:opacity-100 transition-opacity" />
-                      {item}
-                    </Link>
-                  </li>
-                )
-              )}
+              {["Contact Us", "FAQ", "Returns Policy"].map((item) => (
+                <li key={item}>
+                  <Link
+                    href={`/support#${item.toLowerCase().replace(" ", "")}`}
+                    className="text-primary-lighter/90 hover:text-white transition-colors flex items-start gap-2"
+                  >
+                    <span className="mt-1 h-1 w-1 rounded-full bg-accent-light opacity-0 hover:opacity-100 transition-opacity" />
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Newsletter Column */}
-          <div className="lg:col-span-1">
+          {/* Footer CTA*/}
+          <div>
             <h3 className="text-lg font-semibold mb-5 text-white border-b border-primary-light pb-2">
-              Stay Updated
+              Contractor Resources
             </h3>
-            <p className="text-primary-lighter/90 mb-4">
-              Subscribe for exclusive deals and industry tips
-            </p>
-            <div className="relative">
-              <FaEnvelope className="absolute left-3 top-3.5 h-4 w-4 text-primary-lighter/70" />
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full pl-10 pr-4 py-3 mb-2 rounded-lg bg-primary-light/20 border border-primary-light/30 focus:border-accent-light text-white placeholder-primary-lighter/70 focus:outline-none focus:ring-1 focus:ring-accent-light/50"
-              />
-              <Button variant="accent" size="lg" className="w-full">
-                Subscribe
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+            <div className="space-y-4">
+              <p className="text-primary-lighter/90">
+                Get exclusive business pricing and bulk order discounts.
+              </p>
+
+              <Link
+                href="/auth/signup"
+                className="inline-block bg-accent hover:bg-accent-dark text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
+              >
+                Create Account
+              </Link>
+
+              <div className="pt-4 border-t border-primary-light/20">
+                <p className="text-sm text-primary-lighter/80 mb-2">
+                  Already have an account?
+                </p>
+                <Link
+                  href="/auth/login"
+                  className="inline-flex items-center text-primary-light hover:text-white transition-colors font-medium"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Button>
+                  Contractor Sign In
+                  <FaChevronRight className="ml-1 w-3 h-3" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
