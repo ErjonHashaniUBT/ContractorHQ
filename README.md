@@ -1,160 +1,164 @@
+# 🚧 ContractorHQ
 
-#ContractorHq Project
-This web application is built using Next.js, TypeScript, Tailwind CSS, and MongoDB, and it fulfills the technical requirements of the Client-Side Web Development course.
+ContractorHQ is a modern E-Commerce platform specializing in construction tools and equipment. We offer a wide range of high-quality products — including drills, power tools, and heavy-duty equipment — from trusted industry-leading brands like Makita, DeWalt, Milwaukee, Stihl, and Bosch.
 
-The application includes features such as authentication, protected routes, dynamic content rendering, and responsive design.
+Our platform is designed to streamline purchasing for contractors and construction professionals by providing a fast, secure, and intuitive online shopping experience.
 
-1. Functional Pages
-The project includes more than 10 fully functional and interconnected pages, such as:
+**Live Demo**: [https://contractorhq.vercel.app](https://contractorhq.vercel.app)
 
-Home – /src/app/page.tsx
+---
 
-Shop / Products – /src/app/shop/
+## ✨ Features
 
-Cart – /src/app/cart/
+- 🛒 Full E-Commerce platform tailored for construction tools and equipment  
+- 🛠 Extensive catalog including Makita, DeWalt, Milwaukee, Stihl, Bosch, and more  
+- 🛍️ Product filtering and search for easy tool discovery  
+- 🔐 Secure authentication via NextAuth  
+- ⚡️ High performance with Next.js  
+- 🎨 Responsive, modern UI built with Tailwind CSS  
+- 🗃️ Robust backend with MongoDB and Mongoose for scalable data management  
+- 🔄 State management using Zustand (cart logic)  
+- 🔧 Developed with TypeScript for maintainability and scalability  
 
-Admin Panel – /src/app/admin/
+---
 
-User Profile – /src/app/user/
+## 🧱 Tech Stack
 
-Authentication – /src/app/auth/ (Login, Register)
+| Technology Badge | Description                                             |
+|------------------|---------------------------------------------------------|
+| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white) | Framework for server-rendered React apps               |
+| ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) | Library for building user interfaces                   |
+| ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) | Utility-first CSS framework                            |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) | Strongly typed JavaScript                              |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) | NoSQL database for scalable data storage               |
+| ![Mongoose](https://img.shields.io/badge/Mongoose-D54C1D?style=for-the-badge&logo=mongoose&logoColor=white) | ODM for MongoDB with schema-based modeling             |
+| ![Zustand](https://img.shields.io/badge/Zustand-00C1D4?style=for-the-badge&logo=zustand&logoColor=white) | Lightweight state management library                   |
+| ![NextAuth](https://img.shields.io/badge/Auth-NextAuth.js-orange?style=for-the-badge) | Authentication solution for Next.js                    |
 
-Support / Contact – /src/app/support/
+---
 
-Search – /src/app/search/
+## 📄 Functional Pages
 
-Legal Pages – /src/app/legal/ (Privacy Policy, Terms)
+- **Home** – `/src/app/page.tsx`  
+- **Shop / Products** – `/src/app/shop/`  
+- **Cart** – `/src/app/cart/`  
+- **Admin Panel** – `/src/app/admin/`  
+- **User Profile** – `/src/app/user/`  
+- **Authentication** – `/src/app/auth/` (Login, Register)  
+- **Support / Contact** – `/src/app/support/`  
+- **Search** – `/src/app/search/`  
+- **Legal Pages** – `/src/app/legal/` (Privacy Policy, Terms)  
+- **Blogs** – `/src/app/blogs/`  
+- **Brands** – `/src/app/brands/`  
+- **404 Not Found** – `/src/app/not-found.tsx`  
 
-Blogs – /src/app/blogs/
+---
 
-Brands – /src/app/brands/
+## 🧩 Reusable Components
 
-404 Not Found – /src/app/not-found.tsx
+- `Header.tsx` – site navigation  
+- `Footer.tsx` – global footer section  
+- `Button.tsx` – flexible button with variants  
+- `ProductCard.tsx` – product display  
+- `CartToast.tsx`, `HeroSection.tsx`, `FAQ.tsx`, `ContactUs.tsx`, etc.  
 
-2. Reusable Components
-The app uses reusable components structured under:
+All components follow best practices: TypeScript safety, accessibility, and flexible props.
 
-/src/components/layout/
+---
 
-/src/components/ui/
+## 🔐 Authentication and Role Management
 
-/src/components/auth/
+- Built with **NextAuth**  
+- `/user/` – accessible only to authenticated users  
+- `/admin/` – accessible only to admin users  
 
-/src/components/theme/
+---
 
-Examples include:
+## 🛠 CRUD Functionality
 
-Header.tsx – site navigation
+Implemented for:
 
-Footer.tsx – global footer section
+- Products (`/api/products/`)  
+- Users (`/api/user/`)  
+- Blogs (`/api/blogs/`)  
 
-Button.tsx – flexible button with variants (primary, ghost, icon, etc.)
+Includes validation, error handling, and RESTful methods.
 
-ProductCard.tsx – dynamic display of product data
+---
 
-CartToast.tsx, HeroSection.tsx, FAQ.tsx, ContactUs.tsx, etc.
+## 🗃️ MongoDB Integration
 
-All components follow best practices: TypeScript safety, variant systems, accessibility, and flexible props.
+Models in `/src/lib/models/`:
 
-3. Authentication and Role Management
-Implemented using NextAuth:
+- User  
+- Product  
+- Order  
+- Blog  
 
-Login/Register handled in /src/app/auth/
+---
 
-Middleware ensures role-based access:
+## ⚙️ State & Hooks
 
-/user/ – accessible only to authenticated users
+- Local state via `useState`, `useEffect`  
+- Global state via **Context API** in `/components/provider/`  
+- Custom hooks in `/app/hooks/`  
 
-/admin/ – accessible only to admin users
+---
 
-OAuth (e.g. Google) supported
+## ⚡ Data Fetching
 
-4. CRUD Functionality
-Implemented for the following entities:
+- **SSR** – shop, search  
+- **ISR** – product & blog pages  
+- **SSG** – legal pages  
 
-Products – /src/app/api/products/
+---
 
-Users – /src/app/api/user/
+## ✅ Forms with Validation
 
-Blogs – /src/app/api/blogs/
+- Login/Register  
 
-Deals – /src/app/api/deals/
+---
 
-Each API route includes input validation, error handling, and uses RESTful HTTP methods with MongoDB models.
+## 🎨 Tailwind & Responsive Design
 
-5. MongoDB Integration
-MongoDB models are defined in /src/lib/models/, including:
+- Tailwind utility classes  
+- Fully responsive across devices  
+- Custom config in `postcss.config.mjs`
 
-User
+---
 
-Product
+## 🧪 Testing
 
-Order
+- Unit/component tests with **Jest** and **Babel**
 
-Blog
+---
 
-6. Hooks and State Management
-The application utilizes:
+## 🚀 Deployment
 
-useState, useEffect – for local state
+- Deployed on **Vercel**  
+- `.env.local` for secrets (MongoDB URI, NextAuth, etc.)
 
-Context API – via /src/components/provider/ for global state (e.g., user session, cart)
+---
 
-Custom hooks – in /src/app/hooks/
+## 🌙 Extras
 
-7. Data Fetching (SSR, SSG, ISR)
-Various strategies are used depending on the page:
+- 🌗 **Dark Mode** – toggle built with Tailwind and accessible design (`/components/theme/ThemeToggle.tsx`) 
+- 🔁 **Zustand** – lightweight and scalable state management for cart and UI logic  
+- 🧭 **App Router (Next.js 15+)** – leveraging the latest file-based routing, layouts, nested routes, and server components  
+- 🧩 **Iconify** – 100,000+ icons from major libraries, used across UI for branding, feedback, and navigation  
 
-SSR (Server-Side Rendering) – e.g. /shop, /search
+---
 
-ISR (Incremental Static Regeneration) – e.g. product pages, blogs (revalidate: 60)
+##👥 Team Members & Roles
 
-SSG (Static Site Generation) – e.g. legal pages
+| Name          | Role          |
+| ------------- | ------------- |
+| Erjon Hashani | Web Developer |
+| Blendi Fazliu | Web Developer |
 
-8. Forms with Validation
-Forms include:
 
-ContactUs.tsx – /src/components/ui/
+---
 
-Login/Register – with validation and user feedback
+## 🔗 Live Site
 
-Validation handled using react-hook-form + zod.
-
-9. Tailwind CSS and Responsive Design
-Styled using Tailwind CSS:
-
-Utility-first classes
-
-Fully responsive (mobile, tablet, desktop)
-
-Configuration handled in postcss.config.mjs
-
-10. Testing
-Testing is done with Jest and React Testing Library:
-
-Component tests – .test.tsx files
-
-API route tests
-
-11. Deployment and Documentation
-Deployed on Vercel
-
-Full documentation in README.md, including:
-
-Project description
-
-Installation instructions
-
-Live demo link
-
-Team members and roles
-
-12. Environment Variables
-.env.local used for sensitive data (e.g., MongoDB URI, NextAuth secrets)
-
-Proper environment setup for both local and production (Vercel)
-
-Extra Features
-Dark Mode – toggle implemented in /components/theme/ThemeToggle.tsx
-
-Real-Time Features – via WebSockets (e.g., for cart or admin panel)
+👉 [https://contractorhq.vercel.app](https://contractorhq.vercel.app)
