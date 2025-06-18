@@ -18,8 +18,10 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         await connectToDatabase();
 
-        const user = await User.findOne({ email: credentials?.email }).exec();
-        if (!user || !credentials?.password) return null;
+        if (!credentials?.email || !credentials.password) return null;
+
+        const user = await User.findOne({ email: credentials.email }).exec();
+        if (!user) return null;
 
         const isValid = await bcrypt.compare(
           credentials.password,
@@ -35,27 +37,55 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+
     GitHubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
+
   session: {
     strategy: "jwt",
   },
+
   callbacks: {
+    async signIn({ account, profile }) {
+      if (account?.provider === "github") {
+        await connectToDatabase();
+
+        const email = profile?.email;
+        if (!email) return false;
+
+        const existingUser = await User.findOne({ email }).exec();
+        if (!existingUser) {
+          await User.create({
+            name: profile.name || "GitHub User",
+            email: email,
+            password: "", //No password for github users
+            role: "user",
+          });
+        }
+      }
+      return true;
+    },
+
     async jwt({ token, user }) {
       if (user) token.user = user;
       return token;
     },
+
     async session({ session, token }) {
-      session.user = token.user;
+      if (token?.user) {
+        session.user = token.user;
+      }
       return session;
     },
   },
+
   pages: {
     signIn: "/auth/signin",
   },
+
   secret: process.env.NEXTAUTH_SECRET,
 };
 
