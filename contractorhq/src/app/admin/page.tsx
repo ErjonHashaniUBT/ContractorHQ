@@ -30,12 +30,6 @@ export default function AdminDashboard() {
             >
               Create Blog Post
             </Link>
-            <Link
-              href="/admin/messages"
-              className="text-primary-dark dark:text-primary-light hover:bg-primary-lighter dark:hover:bg-primary-dark/20 ml-4 py-1 px-3 max-w-36 rounded-2xl transition-colors"
-            >
-              View Customer Messages
-            </Link>
           </div>
         </div>
 

@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useBlog } from "@/app/hooks/useBlog";
 import { Button } from "@/components/ui/Button";
 import { FiBook } from "react-icons/fi";
+import toast from "react-hot-toast"; // <--- imported toast
 
 interface Blog {
   _id: string;
@@ -61,20 +62,28 @@ export default function AdminBlogsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const result = await createBlog({
-      ...newBlog,
-      slug: newBlog.title.toLowerCase().replace(/\s+/g, "-"),
-    });
-
-    if (result) {
-      setNewBlog({
-        title: "",
-        content: "",
-        category: "",
-        image: "",
-        isPublished: true,
+    try {
+      const result = await createBlog({
+        ...newBlog,
+        slug: newBlog.title.toLowerCase().replace(/\s+/g, "-"),
       });
-      fetchBlogs();
+
+      if (result) {
+        setNewBlog({
+          title: "",
+          content: "",
+          category: "",
+          image: "",
+          isPublished: true,
+        });
+        fetchBlogs();
+        toast.success("Blog created successfully!"); // <--- success toast
+      } else {
+        toast.error("Failed to create blog."); // <--- error toast for failure result
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred."); // <--- error toast for exceptions
+      console.error(error);
     }
   };
 

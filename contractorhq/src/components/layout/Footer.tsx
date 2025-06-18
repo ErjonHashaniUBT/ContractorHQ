@@ -1,9 +1,16 @@
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaChevronRight } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-theme-hero text-white">
+    <motion.footer 
+    initial={{opacity:0, y:20}}
+    whileInView={{opacity:1, y:20}}
+    transition={{duration:0.6}}
+    viewport={{ once: true, margin: "-50px" }}
+    className="bg-theme-hero text-white">
       <div className="container mx-auto px-6 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
@@ -137,6 +144,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

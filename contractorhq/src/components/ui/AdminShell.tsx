@@ -8,7 +8,6 @@ import {
   FiX,
   FiHome,
   FiShoppingBag,
-  FiMessageSquare,
 } from "react-icons/fi";
 import { FaPen } from "react-icons/fa";
 
@@ -98,11 +97,6 @@ export default function AdminShell({
             href="/admin/blogs"
             label="Blogs"
             icon={<FaPen className="text-green-500" />}
-          />
-          <NavItem
-            href="/admin/messages"
-            label="Messages"
-            icon={<FiMessageSquare className="text-purple-500" />}
           />
         </nav>
       </aside>

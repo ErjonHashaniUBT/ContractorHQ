@@ -1,8 +1,8 @@
 import { HeroSection } from "@/components/ui/HeroSection";
 import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/ui/FeaturedProducts";
-import SocialLinks from "@/components/ui/SocialLinks";
 import CustomerReviews from "@/components/ui/CustomerReviews";
+import ContactCTASection from "@/components/ui/ContactCTA";
 
 interface Product {
   _id: string;
@@ -52,13 +52,13 @@ export default async function Home() {
 
   return (
     <>
-        <section>
-          <HeroSection />
-          <FeaturedSection products={products} />
-          <CustomerReviews/>
-          <SocialLinks/>
-          <Footer/>
-        </section>
+      <section>
+        <HeroSection />
+        <FeaturedSection products={products} />
+        <CustomerReviews />
+        <ContactCTASection/>
+        <Footer />
+      </section>
     </>
   );
 }
