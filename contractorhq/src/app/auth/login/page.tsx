@@ -5,12 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import {
-  FaEnvelope,
-  FaLock,
-  FaUserCircle,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaEnvelope, FaLock, FaUserCircle, FaArrowRight, FaGithub } from "react-icons/fa";
 import validator from "validator";
 
 export default function LoginPage() {
@@ -175,6 +170,16 @@ export default function LoginPage() {
                     </>
                   )}
                 </span>
+              </Button>
+
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full py-3.5 px-4 rounded-xl font-medium text-gray-800 border border-gray-300 hover:bg-gray-100 flex items-center justify-center space-x-2"
+                onClick={() => signIn("github")}
+              >
+                <FaGithub />
+                <span>Sign in with GitHub</span>
               </Button>
 
               <div className="text-center text-sm text-gray-500">

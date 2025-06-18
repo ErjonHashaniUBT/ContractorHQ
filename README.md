@@ -69,6 +69,7 @@ All components follow best practices: TypeScript safety, accessibility, and flex
 ## 🔐 Authentication and Role Management
 
 - Built with **NextAuth**  
+- Supports Credentials Provider (email/password) and OAuth Providers (GitHub)
 - `/user/` – accessible only to authenticated users  
 - `/admin/` – accessible only to admin users  
 

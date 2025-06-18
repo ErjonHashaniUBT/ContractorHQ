@@ -1,6 +1,7 @@
 // app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
 import { connectToDatabase } from "@/lib/db";
 import User from "@/lib/models/User";
 import bcrypt from "bcryptjs";
@@ -33,6 +34,10 @@ export const authOptions: NextAuthOptions = {
           role: user.role,
         };
       },
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
   session: {
