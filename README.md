@@ -156,6 +156,29 @@ Models in `/src/lib/models/`:
 | Erjon Hashani | Web Developer |
 | Blendi Fazliu | Web Developer |
 
+---
+
+## Screenshots
+
+Here are some screenshots of the app:
+
+![Screenshot 136](./docs/screenshots/Screenshot%20(136).png)  
+![Screenshot 137](./docs/screenshots/Screenshot%20(137).png)  
+![Screenshot 138](./docs/screenshots/Screenshot%20(138).png)  
+![Screenshot 139](./docs/screenshots/Screenshot%20(139).png)  
+![Screenshot 140](./docs/screenshots/Screenshot%20(140).png)  
+![Screenshot 141](./docs/screenshots/Screenshot%20(141).png)  
+![Screenshot 142](./docs/screenshots/Screenshot%20(142).png)  
+![Screenshot 143](./docs/screenshots/Screenshot%20(143).png)  
+![Screenshot 144](./docs/screenshots/Screenshot%20(144).png)  
+![Screenshot 145](./docs/screenshots/Screenshot%20(145).png)  
+![Screenshot 146](./docs/screenshots/Screenshot%20(146).png)  
+![Screenshot 147](./docs/screenshots/Screenshot%20(147).png)  
+![Screenshot 148](./docs/screenshots/Screenshot%20(148).png)  
+![Screenshot 149](./docs/screenshots/Screenshot%20(149).png)  
+![Screenshot 150](./docs/screenshots/Screenshot%20(150).png)  
+![Screenshot 151](./docs/screenshots/Screenshot%20(151).png)  
+![Screenshot 152](./docs/screenshots/Screenshot%20(152).png)  
 
 ---
 
