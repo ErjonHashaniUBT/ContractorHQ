@@ -3,16 +3,6 @@
 import { FaStar } from "react-icons/fa";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import { easeInOut } from "framer-motion";
-
-const reviewVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: easeInOut }
-  },
-};
 
 export default function CustomerReviews() {
   const reviews = [
@@ -65,12 +55,14 @@ export default function CustomerReviews() {
           {reviews.map((review, index) => (
             <motion.div
               key={index}
-              variants={reviewVariants}
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: index * 0.1,
+              }}
               viewport={{ once: true, margin: "-50px" }}
-              custom={index}
-              transition={{ delay: index * 0.1 }}
               className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="flex mb-3">
