@@ -2,7 +2,6 @@
 
 import { FaStar } from "react-icons/fa";
 import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
 
 export default function CustomerReviews() {
   const reviews = [
@@ -27,13 +26,7 @@ export default function CustomerReviews() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="bg-theme-hero p-12"
-    >
+    <div className="bg-theme-hero p-12">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-12">
           <Icon
@@ -80,6 +73,6 @@ export default function CustomerReviews() {
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
