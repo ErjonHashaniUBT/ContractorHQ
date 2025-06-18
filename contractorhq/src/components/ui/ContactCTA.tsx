@@ -69,13 +69,13 @@ export default function ContactCTASection() {
       </div>
 
       {/* Social Links */}
-      <div className="w-full pb-16 pt-10 px-4">
+      <div className="w-full pt-10 px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center pb-16"
         >
           <h3 className="text-3xl font-bold text-gray-7 mb-3">
             <span className="text-primary">Connect</span> With Us
