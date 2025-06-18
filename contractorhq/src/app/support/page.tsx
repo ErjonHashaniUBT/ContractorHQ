@@ -1,4 +1,3 @@
-// app/support/page.tsx
 "use client";
 
 import ContactUs from "@/components/ui/ContactUs";

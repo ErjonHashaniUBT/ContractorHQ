@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// hooks/useBlog.ts
 import { useState } from "react";
 
 export const useBlog = () => {

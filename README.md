@@ -107,15 +107,17 @@ Models in `/src/lib/models/`:
 
 ## ⚡ Data Fetching
 
-- **SSR** – shop, search  
-- **ISR** – product & blog pages  
-- **SSG** – legal pages  
+- **SSR** – shop
+- **ISR** – blogs 
+- **SSG** – support pages
 
 ---
 
 ## ✅ Forms with Validation
 
 - Login/Register  
+![Validator](https://img.shields.io/badge/validator-✔️-blue) Used for input validation to ensure data integrity and security
+
 
 ---
 
