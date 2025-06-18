@@ -149,7 +149,7 @@ Models in `/src/lib/models/`:
 
 ---
 
-##👥 Team Members & Roles
+## 👥 Team Members & Roles
 
 | Name          | Role          |
 | ------------- | ------------- |
