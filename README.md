@@ -116,7 +116,7 @@ Models in `/src/lib/models/`:
 ## ✅ Forms with Validation
 
 - Login/Register  
-![Validator](https://img.shields.io/badge/Validator-%F0%9F%9A%91-blue) Used for input validation to ensure data integrity and security
+![Validator](https://img.shields.io/badge/Validator-Active-blue?style=for-the-badge&logo=checkcircle&logoColor=white)  Used for input validation to ensure data integrity and security
 
 
 ---
