@@ -3,13 +3,14 @@
 import { FaStar } from "react-icons/fa";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { easeInOut } from "framer-motion";
 
 const reviewVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.5, ease: easeInOut }
   },
 };
 
