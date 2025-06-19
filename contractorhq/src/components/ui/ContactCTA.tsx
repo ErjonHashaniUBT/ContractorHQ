@@ -75,7 +75,7 @@ export default function ContactCTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-4xl mx-auto text-center pb-16"
+          className="max-w-4xl mx-auto text-center"
         >
           <h3 className="text-3xl font-bold text-gray-7 mb-3">
             <span className="text-primary">Connect</span> With Us
