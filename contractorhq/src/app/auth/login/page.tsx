@@ -61,7 +61,7 @@ export default function LoginPage() {
 
       {/* Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="w-full max-w-md bg-light backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
           <div className="p-8">
             <div className="flex justify-center mb-6">
               <div className="w-20 h-20 rounded-full bg-blue-50/80 flex items-center justify-center border-4 border-white shadow-md">
