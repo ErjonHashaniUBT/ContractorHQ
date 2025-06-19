@@ -35,6 +35,13 @@ export default function SupportPage() {
             size="lg"
             className="border border-gray-200 hover:border-primary-lighter"
           >
+            <a href="#about">About Us</a>
+          </Button>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="border border-gray-200 hover:border-primary-lighter"
+          >
             <a href="#faq">FAQ</a>
           </Button>
           <Button
@@ -44,19 +51,18 @@ export default function SupportPage() {
           >
             <a href="#returns">Returns Policy</a>
           </Button>
-          <Button
-            variant="ghost"
-            size="lg"
-            className="border border-gray-200 hover:border-primary-lighter"
-          >
-            <a href="#about">About Us</a>
-          </Button>
         </div>
 
         {/* Sections */}
         <div className="max-w-4xl mx-auto space-y-20">
           <section id="contact" className="scroll-mt-20">
             <ContactUs />
+          </section>
+
+          <div className="border-t border-gray-200"></div>
+
+          <section id="about" className="scroll-mt-20">
+            <AboutPage />
           </section>
 
           <div className="border-t border-gray-200"></div>
@@ -69,12 +75,6 @@ export default function SupportPage() {
 
           <section id="returns" className="scroll-mt-20">
             <ReturnsPolicy />
-          </section>
-
-          <div className="border-t border-gray-200"></div>
-
-          <section id="about" className="scroll-mt-20">
-            <AboutPage />
           </section>
         </div>
 
