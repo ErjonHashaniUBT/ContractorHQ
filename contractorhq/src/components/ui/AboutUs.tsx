@@ -1,41 +1,54 @@
-// app/about/page.tsx
+"use client";
 
 import React from "react";
 
 export default function AboutPage() {
   return (
-    <main className="max-w-4xl mx-auto px-6 py-12">
-      <h1 className="text-4xl font-bold mb-6 text-center">
-        About ContractorHQ
-      </h1>
+    <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 max-w-4xl mx-auto my-12">
+      <div className="mb-8 text-center">
+        <h1 className="text-4xl font-bold text-dark mb-4">
+          About ContractorHQ
+        </h1>
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          Learn more about who we are, what we do, and why we do it.
+        </p>
+      </div>
 
-      <p className="text-lg mb-4">
-        ContractorHQ is a modern e-commerce platform built specifically for
-        construction professionals. Our mission is to streamline the process of
-        purchasing tools and equipment by providing a fast, secure, and
-        user-friendly online shopping experience.
-      </p>
+      <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+        <p>
+          <span className="font-semibold text-dark">ContractorHQ</span> is a
+          modern e-commerce platform tailored for construction professionals.
+          Our mission is to simplify the way tools and equipment are sourced by
+          offering a fast, secure, and intuitive online experience.
+        </p>
 
-      <p className="text-lg mb-4">
-        We proudly offer a wide selection of high-quality tools and heavy-duty
-        gear from top-tier brands including Makita, DeWalt, Milwaukee, Bosch,
-        and Stihl. Whether you&apos;re a contractor, builder, or DIY enthusiast,
-        we’re here to make sure you get the right tools for the job —
-        efficiently and reliably.
-      </p>
+        <p>
+          We proudly stock top-tier brands including{" "}
+          <span className="font-medium text-dark">
+            Makita, DeWalt, Milwaukee, Bosch, and Stihl
+          </span>
+          . Whether you&apos;re a seasoned contractor or a weekend DIYer, our
+          platform ensures you get the right gear for the job.
+        </p>
 
-      <p className="text-lg mb-4">
-        ContractorHQ is built with the latest web technologies like Next.js,
-        MongoDB, and Tailwind CSS, ensuring high performance, responsiveness,
-        and scalability. With secure authentication, a powerful admin panel, and
-        advanced features like product filtering and search, we aim to set the
-        new standard in online tool retail.
-      </p>
+        <p>
+          Built using cutting-edge technologies like{" "}
+          <span className="text-dark font-medium">
+            Next.js, MongoDB, and Tailwind CSS
+          </span>
+          , ContractorHQ delivers performance, scalability, and seamless design.
+          Features like secure authentication, product filtering, and a powerful
+          admin dashboard help us stay ahead.
+        </p>
 
-      <p className="text-lg">
-        Thank you for choosing ContractorHQ — your trusted partner in
-        construction.
-      </p>
-    </main>
+        <p>
+          Thank you for choosing ContractorHQ —
+          <span className="font-semibold text-dark">
+            {" "}
+            your trusted partner in construction.
+          </span>
+        </p>
+      </div>
+    </div>
   );
 }
