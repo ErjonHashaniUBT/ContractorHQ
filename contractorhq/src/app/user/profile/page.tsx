@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import User, { IUser } from "@/lib/models/User";
+import { redirect } from "next/navigation";
 import { connectToDatabase } from "@/lib/db";
 import UserProfileClient from "@/components/auth/UserProfileClient";
 import mongoose from "mongoose";
@@ -19,13 +20,7 @@ export default async function UserProfilePage() {
   const session = await getServerSession();
 
   if (!session?.user?.email) {
-    return (
-      <main className="max-w-3xl mx-auto p-6 text-center">
-        <p className="text-gray-7 font-semibold">
-          Please log in to view your profile.
-        </p>
-      </main>
-    );
+    redirect("/auth/login");
   }
 
   const user = await User.findOne({ email: session.user.email })
