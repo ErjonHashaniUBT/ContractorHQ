@@ -212,12 +212,14 @@ export default function Header() {
                 <FiChevronDown className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" />
               </Link>
             </div>
+
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-light rounded-lg shadow-xl py-2 z-50 border-1 border-gray-light invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
               <div className="px-4 py-2 border-b border-light">
                 <h3 className="text-sm font-semibold text-dark">
                   Support Center
                 </h3>
               </div>
+
               <Link
                 href="/support#contact"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
@@ -226,6 +228,16 @@ export default function Header() {
                   Contact Us
                 </span>
               </Link>
+
+              <Link
+                href="/support#about"
+                className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
+              >
+                <span className="group-hover/item:ml-1 transition-all duration-150">
+                  About Us
+                </span>
+              </Link>
+
               <Link
                 href="/support#faq"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
@@ -234,6 +246,7 @@ export default function Header() {
                   FAQ
                 </span>
               </Link>
+
               <Link
                 href="/support#returns"
                 className="block px-4 py-2.5 text-sm text-dark hover:bg-gray-hundred transition-colors duration-150 group/item"
@@ -503,9 +516,7 @@ export default function Header() {
             {/* Theme - dark mode */}
             <div className="block sm:hidden">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-7">
-                  Appearance
-                </span>
+                <span className="font-medium text-gray-7">Appearance</span>
                 <span className="bg-primary-light rounded-lg">
                   <ThemeToggle />
                 </span>

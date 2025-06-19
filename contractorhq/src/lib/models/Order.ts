@@ -21,6 +21,6 @@ const OrderSchema = new mongoose.Schema({
 });
 
 // TTL index: Automatically delete orders 7 days after `createdAt`
-OrderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 30 });
+OrderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 604800 });
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

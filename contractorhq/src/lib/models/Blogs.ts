@@ -23,7 +23,7 @@ const BlogSchema = new Schema<IBlog>(
     isPublished: { type: Boolean, default: true },
     slug: { type: String, required: true, unique: true },
   },
-  { timestamps: true } // Automatically handle createdAt and updatedAt
+  { timestamps: true }
 );
 
 export const Blog = models.Blog || model<IBlog>("Blog", BlogSchema);

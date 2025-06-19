@@ -13,7 +13,7 @@ export interface IProduct extends Document {
   rating?: number;
 }
 
-// Check if the model already exists to prevent overwriting
+// Checks if the model already exists to prevent overwriting
 const ProductSchema = new Schema<IProduct>(
   {
     name: { type: String, required: true },
@@ -34,6 +34,6 @@ const ProductSchema = new Schema<IProduct>(
   { timestamps: true }
 );
 
-// If the model is already defined, return the existing model, otherwise define it
+// If the model is already defined, returns the existing model, otherwise defines it
 export const Product =
   models.Product || model<IProduct>("Product", ProductSchema);

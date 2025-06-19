@@ -1,4 +1,3 @@
-// app/lib/models/User.ts
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import mongoose, { Schema, model, models, Document } from "mongoose";
 

@@ -3,6 +3,7 @@
 import ContactUs from "@/components/ui/ContactUs";
 import FAQ from "@/components/ui/FAQ";
 import ReturnsPolicy from "@/components/ui/ReturnsPolicy";
+import AboutPage from "@/components/ui/AboutUs"; // this is your About component
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -43,6 +44,13 @@ export default function SupportPage() {
           >
             <a href="#returns">Returns Policy</a>
           </Button>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="border border-gray-200 hover:border-primary-lighter"
+          >
+            <a href="#about">About Us</a>
+          </Button>
         </div>
 
         {/* Sections */}
@@ -61,6 +69,12 @@ export default function SupportPage() {
 
           <section id="returns" className="scroll-mt-20">
             <ReturnsPolicy />
+          </section>
+
+          <div className="border-t border-gray-200"></div>
+
+          <section id="about" className="scroll-mt-20">
+            <AboutPage />
           </section>
         </div>
 
